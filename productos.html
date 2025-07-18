@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuestros productos - SnixCo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+    <div id="navBarContainer" class="container">
+
+        <div class="navbar">
+            <div class="logo">
+                <a href=""><img src="images/Snik-logo.png" width="125px"></a>
+            </div>
+            <nav>
+                <ul id="menuItems">
+                    <il><a href="index.html">Home</a></il>
+                    <il><a href="productos.html">Productos</a></il>
+                    <il><a href="">Nosotros</a></il>
+                    <il><a href="">Contactanos</a></il>
+                </ul>
+
+            </nav>
+            <a id="carrito" href="" class="fa-solid fa-cart-shopping">
+                <span class="contador">0</span>
+            </a>
+            <a id="menuBar" class="fa-solid fa-bars" onclick="menutoggle()"></a>
+        </div>
+       
+    </div>
+    
+
+    <!--Productos destacados-->
+    <div id="todosLosProductos" class="container">
+        <div class="small-container">
+            <div class="row row-2">
+                <h2>Todos los productos</h2>
+                <select>
+                    <option>Por precio</option>
+                    <option>Por rating</option>
+                    <option>Por marca</option>
+                    <option>Por venta</option>
+                </select>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <a id="" href="detallesProducto.html" ><img src="images/nige2-removebg-preview-removebg-preview (1).png" alt=""> </a>
+                    <h4>Zapatilla deportiva</h4>
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p>$150.000</p>
+                </div>
+            </div>
+        </div>
+        <div class="pag-btn">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+        </div>
+    </div>
+  
+    <!--footer-->
+
+    <div id="footer" class="container">
+        <div class="small-container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Nuestras redes sociales</h3>
+                    <p>Siguenos</p>
+                    <div class="app-logo">
+                        <img src="images/facebook-logo-facebook-icon-transparent-free-png.webp">
+                        <img src="images/Instagram_icon.png">
+                        <img src="images/WhatsApp.svg.webp" alt="">
+                    </div>
+                
+                
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/snik-logo-pequeño.png" alt="">
+                    <p>Nuestra razon de ser es tu comidad, pide ya que esperas</p>
+                <hr class="hrLine">
+                <p class="copyright">Copyright 2025 - SnixCo</p>
+                </div>
+                
+                <div class="footer-col-3">
+                    <h3>Enlances</h3>
+                    <ul>
+                        <li>Home</li>
+                        <li>Productos</li>
+                        <li>Contactos</li>
+                        
+                    </ul>
+                </div>
+               
+            </div>
+            
+        </div>
+    </div>
+
+    <!--jstogglemenu-->
+    <script>
+        var menuItems = document.getElementById("menuItems");
+
+        menuItems.style.maxHeight = "0px";
+        function menutoggle(){
+            if(menuItems.style.maxHeight == "0px" ){
+                menuItems.style.maxHeight = "200px";
+            }else{
+                menuItems.style.maxHeight = "0px";
+            }
+        }
+
+    </script>
+
+
+</body>
+
+</html>

@@ -17,20 +17,21 @@
 
         <div class="navbar">
             <div class="logo">
-                <a href=""><img src="images/Snik-logo.png" width="125px"></a>
+                <a href="index.html"><img src="images/Snik-logo.png" width="125px"></a>
             </div>
             <nav>
-                <ul>
-                    <il><a href="">Home</a></il>
-                    <il><a href="">Productos</a></il>
-                    <il><a href="">Nosotros</a></il>
-                    <il><a href="">Contactanos</a></il>
+                <ul id="menuItems">
+                    <il><a href="index.html">Home</a></il>
+                    <il><a href="productos.html">Productos</a></il>
+                    <il><a href="#">Nosotros</a></il>
+                    <il><a href="#">Contactanos</a></il>
                 </ul>
 
             </nav>
             <a id="carrito" href="" class="fa-solid fa-cart-shopping">
                 <span class="contador">0</span>
             </a>
+            <a id="menuBar" class="fa-solid fa-bars" onclick="menutoggle()"></a>
         </div>
         <div class="row">
             <div class="col-2">
@@ -48,53 +49,190 @@
         </div>
     </div>
     <!-- Categorias destacadas -->
-     <div id="categoriasDestacadas" class="container">
-    <div class="categorias">
-        <div class="small-container">
-            <h2 class="title">Categorias Destacadas</h2>
-            <div class="row">
-                <div class="col-3">
-                    <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+    <div id="categoriasDestacadas" class="container">
+        <div class="categorias">
+            <div class="small-container">
+                <h2 class="title">Categorias Destacadas</h2>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                    </div>
+                    <div class="col-3">
+                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                    </div>
+
+
+                    <div class="col-3">
+                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                    </div>
+
+
                 </div>
-                <div class="col-3">
-                    <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                </div>
-
-
-                <div class="col-3">
-                    <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                </div>
-
-
             </div>
-        </div>
 
-    </div>
+        </div>
     </div>
 
     <!--Productos destacados-->
 
-    
+
     <div id="productosDestacados" class="container">
-    <div class="small-container">
-        <h2 class="title">Productos Destacados</h2>
-        <div class="row">
-            <div class="col-4">
-                <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                <h4>Zapatilla deportiva</h4>
-                <div class="rating">
-                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
-                    <i class="fa-solid fa-star-half-stroke" style="color: #FFD43B;"></i>
+        <div class="small-container">
+            <h2 class="title">Productos Destacados</h2>
+            <div class="row">
+                <div class="col-4">
+                    <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                    <h4>Zapatilla deportiva</h4>
+                    <div class="rating">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <p>$150.000</p>
                 </div>
-                <p>$150.000</p>
             </div>
         </div>
     </div>
+
+    <!--Testimonios-->
+    <div id="testimonios" class="container">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-3">
+                    <i class="fa fa-quote-left"></i>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatum, magnam vero dolorem
+                    ex quod eligendi a, fuga illum placeat quos maxime aspernatur omnis adipisci soluta illo at quasi.
+                    Voluptate!</p>
+                    <i class="fa fa-quote-right"></i>
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-o"></i>
+                </div>
+                <img src="" alt="">
+                <h3>Jose Sauma</h3>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-quote-left"></i>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatum, magnam vero dolorem
+                    ex quod eligendi a, fuga illum placeat quos maxime aspernatur omnis adipisci soluta illo at quasi.
+                    Voluptate!</p>
+                    <i class="fa fa-quote-right"></i>
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <img src="" alt="">
+                <h3>Jose Sauma</h3>
+                </div>
+                <div class="col-3">
+                    <i class="fa fa-quote-left"></i>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis voluptatum, magnam vero dolorem
+                    ex quod eligendi a, fuga illum placeat quos maxime aspernatur omnis adipisci soluta illo at quasi.
+                    Voluptate!</p>
+                    <i class="fa fa-quote-right"></i>
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <img src="" alt="">
+                <h3>Jose Sauma</h3>
+                </div>
+                
+            </div>
+
+        </div>
     </div>
-  
+
+    <!--Marcas-->
+
+    <div id="marcas" class="container">
+        <div class="small-container">
+            <div class="row">
+                <div class="col-5">
+                    <img src="images/Nike-Logo.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/Nike-Logo.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/Nike-Logo.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/Nike-Logo.png" alt="">
+                </div>
+                <div class="col-5">
+                    <img src="images/Nike-Logo.png" alt="">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!--footer-->
+
+    <div id="footer" class="container">
+        <div class="small-container">
+            <div class="row">
+                <div class="footer-col-1">
+                    <h3>Nuestras redes sociales</h3>
+                    <p>Siguenos</p>
+                    <div class="app-logo">
+                        <img src="images/facebook-logo-facebook-icon-transparent-free-png.webp">
+                        <img src="images/Instagram_icon.png">
+                        <img src="images/WhatsApp.svg.webp" alt="">
+                    </div>
+                
+                
+                </div>
+                <div class="footer-col-2">
+                    <img src="images/snik-logo-pequeño.png" alt="">
+                    <p>Nuestra razon de ser es tu comidad, pide ya que esperas</p>
+                <hr class="hrLine">
+                <p class="copyright">Copyright 2025 - SnixCo</p>
+                </div>
+                
+                <div class="footer-col-3">
+                    <h3>Enlances</h3>
+                    <ul>
+                    <il><a href="index.html">Home</a></il>
+                    <il><a href="productos.html">Productos</a></il>
+                    <il><a href="#">Nosotros</a></il>
+                    <il><a href="#">Contactanos</a></il>
+                        
+                    </ul>
+                </div>
+               
+            </div>
+            
+        </div>
+    </div>
+
+    <!--jstogglemenu-->
+    <script>
+        var menuItems = document.getElementById("menuItems");
+
+        menuItems.style.maxHeight = "0px";
+        function menutoggle(){
+            if(menuItems.style.maxHeight == "0px" ){
+                menuItems.style.maxHeight = "200px";
+            }else{
+                menuItems.style.maxHeight = "0px";
+            }
+        }
+
+    </script>
+
 
 </body>
 
