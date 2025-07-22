@@ -110,18 +110,21 @@ a img:hover {
 
 #botonTitulo {
     display: inline-block;
+    
     align-items: center;
     flex-wrap: wrap;
     padding: 8px 30px;
     margin: 30px 0;
     border-radius: 30px;
     justify-content: space-around;
-    transition: background 0.5s;
+    transition: transform 0.5s;
+    animation: bounce infinite 3s;
     background: #dbff47;
 
 }
 
 #botonTitulo:hover {
+    transform: translateX(5px);
     background: greenyellow;
 }
 
@@ -342,6 +345,25 @@ h4 {
     filter: grayscale(0%);
 }
 
+#productosPromocions .col-4{
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.5s;
+}
+#productosPromocions .col-4:hover{
+    transform: translateY(-10px);
+}
+#productosPromocions .small-container{
+     background: linear-gradient(to right, #ffffff, #f0f0f0, #ffffff) ;
+}
+
+
+#productosPromocions .title::after{
+    background: #dbff47;
+}
+
 /*--footer--*/
 #footer .small-container {
     background: #dbff47;
@@ -480,6 +502,8 @@ outline: none;
     transform: translateY(-10px);
 }
 
+
+
 /*Producto individual*/
 
 .producto-individual{
@@ -535,6 +559,52 @@ input:focus{
     cursor: pointer;
 }
 
+#botonTituloContraentrega{
+    display: inline-block;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    justify-content: space-around;
+    transition: transform 0.5s;
+    animation: bounce infinite 1s;
+    background: #dbff47;
+}
+#botonTituloTarjeta{
+    display: inline-block;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    justify-content: space-around;
+    transition: transform 0.5s;
+    animation: bounce infinite 1s;
+    background: red;
+}
+
+#botonTituloTarjeta:hover, #botonTituloContraentrega:hover{
+    transform: translateX(10px);
+}
+
+#botonAñadirAlCarrito{
+     display: inline-block;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    justify-content: space-around;
+    transition: transform 0.5s;
+   
+    background: #dbff47;
+}
+
+#botonAñadirAlCarrito:hover{
+    transform: translateX(10px);
+}
+
 
 /*Media*/
 
@@ -578,4 +648,11 @@ input:focus{
         flex-basis: 100%;
     }
 
+}
+
+@keyframes bounce {
+    from, to { transform: scale(1, 1); }
+  25% { transform: scale(0.9, 1.1); }
+  50% { transform: scale(1.1, 0.9); }
+  75% { transform: scale(0.95, 1.05); }
 }
