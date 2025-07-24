@@ -605,6 +605,135 @@ input:focus{
     transform: translateX(10px);
 }
 
+#productosDestacados .row{
+    overflow: hidden;
+    
+    
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    margin: 0 auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 400px;
+}
+.slider{
+    height: 250px;
+    margin: auto;
+    position: relative;
+    width: 90%;
+    display: grid;
+    place-items: center;   
+}
+.slider::-webkit-scrollbar {
+  display: none; /* Chrome, Safari y Opera */
+}
+
+.slider-track{
+    display: flex;
+    width: calc(250px * 8);
+    gap: 16px;
+    animation: scroll 40s infinite linear;
+   
+
+}
+
+.slide{
+    height: 200px;
+    width: 250px;
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    perspective: 100px;
+    
+}
+
+.slider::before,
+.slider::after{
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 15%;
+    z-index: 2;
+}
+
+.slider::before{
+    left: 0;
+    top: 0;
+}
+
+.slider::after{
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+}
+
+.slider .col-4{
+    width: 100% !important;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 40px;
+    transition: transform 1s;
+}
+
+.slider .col-4:hover{
+    transform: translateY(5px) !important;
+}
+
+#marcas .slider-track{
+     display: flex;
+    width: calc(250px * 3);
+    gap: 16px;
+    animation: scroll 20s infinite linear;
+   
+}
+#marcas .row{
+    overflow: hidden;
+  
+    
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+    margin: 0 auto;
+    scrollbar-width: none;
+   
+    height: 400px;
+}
+#marcas .slider .col-5{
+    width: 100% !important;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 40px;
+    transition: transform 1s;
+}
+
+#marcas .title::after{
+background: #dbff47;
+}
+
+#marcas .slider::before,
+#marcas .slider::after{
+    background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
+    content: '';
+    height: 100%;
+    position: absolute;
+    width: 15px;
+    z-index: 2;
+}
+
+
+#marcas .slider::before{
+    left: 0;
+    top: 0;
+}
+
+#marcas.slider::after{
+    right: 0;
+    top: 0;
+    transform: rotateZ(180deg);
+}
 
 /*Media*/
 
@@ -649,6 +778,18 @@ input:focus{
     }
 
 }
+
+
+@keyframes scroll {
+    0%{
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(calc(-250px * 4));
+    }
+    
+}
+
 
 @keyframes bounce {
     from, to { transform: scale(1, 1); }
