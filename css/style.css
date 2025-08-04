@@ -632,7 +632,7 @@ input:focus{
     display: flex;
     width: calc(250px * 8);
     gap: 16px;
-    animation: scroll 40s infinite linear;
+    animation: scrollProductos 10s infinite linear;
    
 
 }
@@ -681,48 +681,24 @@ input:focus{
     transform: translateY(5px) !important;
 }
 
-#marcas .slider-track{
-     display: flex;
-    width: calc(250px * 3);
-    gap: 16px;
-    animation: scroll 20s infinite linear;
-   
-}
-#marcas .row{
-    overflow: hidden;
-  
-    
-    -webkit-overflow-scrolling: touch;
-    border-radius: 10px;
-    margin: 0 auto;
-    scrollbar-width: none;
-   
-    height: 400px;
-}
-#marcas .slider .col-5{
-    width: 100% !important;
-    scroll-snap-align: start;
-    flex-shrink: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    margin-right: 40px;
-    transition: transform 1s;
+#marcas .slider-track {
+  display: flex;
+  gap: 16px;
+    width: calc(250px * 10);
+  animation: scroll 10s linear infinite;
 }
 
-#marcas .title::after{
-background: #dbff47;
+#marcas .row {
+  overflow: hidden;
+  border-radius: 10px;
+  height: 400px;
 }
 
-#marcas .slider::before,
-#marcas .slider::after{
-    background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-    content: '';
-    height: 100%;
-    position: absolute;
-    width: 15px;
-    z-index: 2;
+#marcas .slider .col-5 {
+  flex: 0 0 auto;
+  width: 250px;
+  border-radius: 10px;
 }
-
 
 #marcas .slider::before{
     left: 0;
@@ -734,6 +710,15 @@ background: #dbff47;
     top: 0;
     transform: rotateZ(180deg);
 }
+
+#marcas .title::after{
+background: #dbff47;
+}
+
+
+
+
+
 
 /*Media*/
 
@@ -781,12 +766,22 @@ background: #dbff47;
 
 
 @keyframes scroll {
-    0%{
-        transform: translateX(0);
-    }
-    100%{
-        transform: translateX(calc(-250px * 4));
-    }
+     0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+    
+}
+
+@keyframes scrollProductos {
+     0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-30%);
+  }
     
 }
 
