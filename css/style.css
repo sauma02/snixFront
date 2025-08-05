@@ -630,7 +630,7 @@ input:focus{
 
 .slider-track{
     display: flex;
-    width: calc(250px * 8);
+    width: calc(250px * 12);
     gap: 16px;
     animation: scrollProductos 10s infinite linear;
    
@@ -777,10 +777,10 @@ background: #dbff47;
 
 @keyframes scrollProductos {
      0% {
-    transform: translateX(0);
+    transform: translateX(0%);
   }
   100% {
-    transform: translateX(-30%);
+    transform: translateX(-40%);
   }
     
 }
