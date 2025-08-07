@@ -20,7 +20,7 @@ function mostrarPagina(pagina){
         <div class="rating">
         ${generarEstrellas(p.rating)}
         </div>
-        <p>${p.precio}        
+        <p>$${p.precio}</p>        
         `;
 
         contenedor.appendChild(div)
@@ -36,7 +36,7 @@ function generarEstrellas(rating){
     for(let i = 0; i < enteras; i++) estrellas += `<i class="fa-solid f-star"></i>`;
     if(media) estrellas += `<i class="fa-solid fa-star-half-stroke"></i>`;
     const vacias = 5 - enteras - (media ? 1: 0);
-    for(let i = 0; i< vacias;i++) estrellas += `<i class="fa-regular fa-star></i>`;
+    for(let i = 0; i< vacias;i++) estrellas += `<i class="fa-regular fa-star"></i>`;
 
     return estrellas;
 }
@@ -80,10 +80,14 @@ fetch("http://localhost:1000/home/productos", {
     if(!response.ok){
         console.error("Error al obetener productos");
     }
+   
     return response.json();
 })
 .then(data =>{
-    productos = data.dtos;
+        console.log(data);
+      productos = data.dtos;  
+    
+    
     mostrarPagina(1);
     crearPaginacion();
    
