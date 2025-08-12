@@ -8,6 +8,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+
+    
+    <script src="js/funciones.js"></script>
 </head>
 
 <body>
@@ -28,9 +36,34 @@
                 </ul>
 
             </nav>
-            <a id="carrito" href="" class="fa-solid fa-cart-shopping">
-                <span class="contador">0</span>
+            <a id="carrito" href="#" onclick="mostrarCarrito()">
+                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                <span id="contadorCarro" class="contador">0</span>
             </a>
+            <div id="modalCarrito" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar" onclick="cerrarCarrito()">&times;</span>
+                    <h2>Mi Carrito</h2>
+                    <div id="carritoItems">
+                        <table id="tablaCarrito" class="table table-striped mt-3">
+                            <thead>
+
+                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
+
+
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <a id="menuBar" class="fa-solid fa-bars" onclick="menutoggle()"></a>
         </div>
         <div class="row">
@@ -331,9 +364,6 @@
                             <div class="col-5">
                                 <img src="images/Nike-Logo.png" alt="">
                             </div>
-                             <div class="col-5">
-                                <img src="images/Nike-Logo.png" alt="">
-                            </div>
                             <div class="col-5">
                                 <img src="images/Nike-Logo.png" alt="">
                             </div>
@@ -346,7 +376,10 @@
                             <div class="col-5">
                                 <img src="images/Nike-Logo.png" alt="">
                             </div>
-                             <div class="col-5">
+                            <div class="col-5">
+                                <img src="images/Nike-Logo.png" alt="">
+                            </div>
+                            <div class="col-5">
                                 <img src="images/Nike-Logo.png" alt="">
                             </div>
                             <div class="col-5">
@@ -481,7 +514,7 @@
     <!--jstogglemenu-->
     <script>
         var menuItems = document.getElementById("menuItems");
-
+        var modal = document.getElementById("modalCarrito");
         menuItems.style.maxHeight = "0px";
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {
@@ -490,6 +523,18 @@
                 menuItems.style.maxHeight = "0px";
             }
         }
+        function mostrarCarrito() {
+            modal.style.display = "block";
+        }
+        function cerrarCarrito() {
+            modal.style.display = "none";
+        }
+
+        $(document).ready(function () {
+            $('#tablaCarrito').DataTable();
+        }
+        );
+
 
     </script>
 

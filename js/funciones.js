@@ -7,6 +7,16 @@ let carro = [];
 
 
 function obtenerCarrito() {
+
+    const carroGuardado = JSON.parse(localStorage.getItem("carro")) || [];
+    if (carroGuardado && carroGuardado.length > 0) {
+        carro = carroGuardado;
+        mapearCarrito(carro);
+        return;
+    }
+
+
+
     fetch("http://localhost:1000/home/carrito", {
         method: "GET",
         headers: {
@@ -18,20 +28,20 @@ function obtenerCarrito() {
         }
         return response.json();
     }).then(data => {
-        carro = data;
-        document.addEventListener("DOMContentLoaded", () => {
-            const contador = document.querySelector("#contadorCarro .contador");
-            if (carro.carrito === null) {
-                contador.textContent = 0;
-            } else {
-                contador.textContent = carro.carrito.length;
-            }
-        });
+        carro = data.carrito;
+        console.log(carro);
+        localStorage.setItem("carro", JSON.stringify(carro));
+
+
 
         mapearCarrito(carro);
     }).catch(error => {
         console.error("Error: ", error);
     })
+}
+function actualizarContador() {
+    const contador = document.getElementById("contadorCarro");
+    contador.textContent = carro.length;
 }
 function mostrarPagina(pagina) {
     const contenedor = document.getElementById("contenedorProductos");
@@ -62,7 +72,7 @@ function mostrarPagina(pagina) {
         <a style="display: block;     
     margin-bottom: 3px; 
      margin-top:5px; 
-    text-align: center;" href="#" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(this.dataset.id)" href="" class="btn">Añadir al carrito</a>
+    text-align: center;" href="#" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(${p.id})" href="" class="btn">Añadir al carrito</a>
         <a style="display: block;     
     margin-bottom: 3px;
      margin-top:5px;  
@@ -106,6 +116,24 @@ function crearPaginacion() {
     }
 }
 
+function eliminarProducto(id) {
+    const item = carro.find(i => i.id == id);
+    if (!item) {
+        console.error("El producto no existe");
+    }
+
+    if (item) {
+        carro = carro.filter(c => c.id !== item.id);
+        localStorage.setItem("carro", JSON.stringify(carro));
+        console.log("producto eliminado con exito");
+        mapearCarrito(carro);
+    }
+
+
+
+
+}
+
 
 function listarProductos() {
     fetch("http://localhost:1000/home/productos", {
@@ -125,7 +153,7 @@ function listarProductos() {
             console.log(data);
             productos = data.dtos;
 
-
+            obtenerCarrito();
             mostrarPagina(1);
             crearPaginacion();
 
@@ -193,35 +221,121 @@ function mapearCarrito(carro) {
 
         }
 
-    }else{
-            let item = carro.carrito;
-            const contenedor = document.getElementById("tablaCarrito");
-            contenedor.innerHTML = "";
-            item.forEach(p => {
-                const tableHead = document.createElement("thead");
-                const tableBody = document.createElement("tbody");
-                tableHead.innerHTML = `
+    } else {
+
+        const contenedor = document.getElementById("tablaCarrito");
+        contenedor.innerHTML = "";
+        const tableHead = document.createElement("thead");
+
+        tableHead.innerHTML = `
                     <tr>
                         <th>Producto:</th>
                         <th>Cantidad:</th>
-                        <th>Precio:</th>
+                        <th>Subtotal:</th>
+                        <th>Accion:</th>
+
                     </tr>
                 `;
-                tableBody.innerHTML=`
+        const tableBody = document.createElement("tbody");
+        let total = 0;
+        carro.forEach(p => {
+            const subTotal = p.precio * p.cantidad;
+            total += subTotal;
+
+
+            tableBody.innerHTML += `
                     <tr>
-                        <td>${p.dto.nombre}</td>
-                        <td>${p.cantidad}</td>
-                        <td>${p.precio}</td>
-                    </tr> 
+                        <td>${p.nombre}</td>
+                        <td>
+                        <input
+                            type="number"
+                            min="1"
+                            value="${p.cantidad}"
+                            onchange="cambiarCantidad(${p.id}, this.value)"
+                            style="width: 50px; 
+        height: 30px; 
+        padding: 5px; 
+        text-align: center; 
+        font-size: 16px;
+        border: 1px solid #ccc; 
+        border-radius: 5px;"
+                        >
+                        </td>
+                        <td>${subTotal.toLocaleString()}</td>
+                        <td><a style="display: inline-block;
+    align-items: center;
+    flex-wrap: wrap;
+    color: black;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    justify-content: space-around;
+    transition: transform 0.5s;
+    background: red;
+    cursor: pointer;
+    " onclick="eliminarProducto(${p.id})">Eliminar</a></td>
+                    </tr>
+                    
+                        
                 `;
-            });
-            
+
+        });
+        tableBody.innerHTML += `
+                   <tr>
+                        <td>Total: </td>
+                        <td>${total.toLocaleString()}</td>
+                    </tr> `;
+
+        contenedor.appendChild(tableHead);
+        contenedor.appendChild(tableBody);
+
+        actualizarContador();
+
+
 
     }
 
 }
+function cambiarCantidad(id, cantidad) {
+    nuevaCantidad = parseInt(cantidad);
+    if (nuevaCantidad < 1 || isNaN(nuevaCantidad)) {
+        console.error("La cantidad no puede ser menor a 1");
+        return;
+    }
+
+    const producto = carro.find(pro => pro.id == id);
+
+    if (producto) {
+        producto.cantidad = nuevaCantidad;
+
+    }
+
+    localStorage.setItem("carro", JSON.stringify(carro));
+    mapearCarrito(carro);
+
+}
 function anadirAlCarrito(id) {
+
+
+    const producto = productos.find(p => p.id == id);
+
+    if (!producto) {
+        console.error("El producto no existe o esta vacio");
+    }
+
+    const itemExistente = carro.find(item => item.id == id);
+    if (itemExistente) {
+        itemExistente.cantidad++;
+        console.log("Cantidad aumentada");
+    } else {
+        carro.push({ ...producto, cantidad: 1 });
+        console.log("Producto añadido con exito");
+    }
+    console.log(carro);
+    localStorage.setItem("carro", JSON.stringify(carro));
+    mapearCarrito(carro);
+    return carro;
+
 
 }
 listarProductos();
-obtenerCarrito();
