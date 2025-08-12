@@ -3,7 +3,36 @@ let productos = [];
 let paginaActual = 1;
 const descuento = 50000;
 let producto;
+let carro = [];
 
+
+function obtenerCarrito() {
+    fetch("http://localhost:1000/home/carrito", {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
+        }
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error(`Error inesperados encontrado ${response.status}`)
+        }
+        return response.json();
+    }).then(data => {
+        carro = data;
+        document.addEventListener("DOMContentLoaded", () => {
+            const contador = document.querySelector("#contadorCarro .contador");
+            if (carro.carrito === null) {
+                contador.textContent = 0;
+            } else {
+                contador.textContent = carro.carrito.length;
+            }
+        });
+
+        mapearCarrito(carro);
+    }).catch(error => {
+        console.error("Error: ", error);
+    })
+}
 function mostrarPagina(pagina) {
     const contenedor = document.getElementById("contenedorProductos");
     contenedor.innerHTML = "";
@@ -16,7 +45,7 @@ function mostrarPagina(pagina) {
         const div = document.createElement("div");
         div.className = "col-4";
         div.innerHTML = `
-        <a class="aProductos" href="home/productos/detallesProducto/${p.id}">
+        <a class="aProductos" href="detallesProducto.html?id=${p.id}">
         <img class="imagenProductos" src="${p.imageUrl[0]}" alt="${p.nombre}">
         </a>
         <h4>${p.nombre}</h4>
@@ -24,7 +53,21 @@ function mostrarPagina(pagina) {
         ${generarEstrellas(p.rating)}
         </div>
         <p style="text-decoration: line-through !important; color: red !important;">$${p.precio + descuento}<p>
-        <p>$${p.precio}</p>        
+        <p>$${p.precio}</p>
+        
+        <a style="display: block;     
+    margin-bottom: 3px;
+    margin-top:3px; 
+    text-align: center;" id="botonTituloContraentrega" data-id="${p.id}" href="" class="btn">Comprar ya contraentrega</a>        
+        <a style="display: block;     
+    margin-bottom: 3px; 
+     margin-top:5px; 
+    text-align: center;" href="#" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(this.dataset.id)" href="" class="btn">Añadir al carrito</a>
+        <a style="display: block;     
+    margin-bottom: 3px;
+     margin-top:5px;  
+    text-align: center;" id="botonTituloTarjeta" data-id="${p.id}" href="" class="btn">Comprar ya con tarjeta</a>
+        
         `;
 
         contenedor.appendChild(div)
@@ -64,17 +107,6 @@ function crearPaginacion() {
 }
 
 
-function mostrarProducto(producto){
-    
-}
-
-
-
-
-
-
-
-
 function listarProductos() {
     fetch("http://localhost:1000/home/productos", {
         method: "GET",
@@ -111,23 +143,85 @@ function redirigirProducto(id) {
 
         method: "GET",
         headers: {
-            "Content-type":"application/json"
+            "Content-type": "application/json"
 
         }
     }
     )
-    .then(response => {
-        if(!response.ok){
-            console.error("Error al obtener datos");
+        .then(response => {
+            if (!response.ok) {
+                console.error("Error al obtener datos");
+            }
+            return response.json();
+        })
+        .then(data => {
+            producto = data;
+            mostrarProducto(producto);
+        })
+        .catch(error => {
+            console.log("Error al mostrar el producto: ", error);
+        });
+}
+function mapearCarrito(carro) {
+
+    if (carro.clase == "error") {
+        console.error(carro.mensaje);
+        if (carro.carrito.length === 0) {
+
+            const contenedor = document.getElementById("tablaCarrito");
+            contenedor.innerHTML = "";
+
+            const tableHead = document.createElement("thead");
+            const tableBody = document.createElement("tbody");
+            tableHead.innerHTML = `
+            
+
+            <tr>
+                <th>No hay productos registrados</th>
+            </tr>
+        `;
+            tableBody.innerHTML = `
+            <tr>
+                <td>No hay productos registrados</td>
+            </tr>
+        `;
+
+            contenedor.appendChild(tableHead);
+            contenedor.appendChild(tableBody);
+            return contenedor;
+
+
         }
-        return response.json();
-    })
-    .then(data => {
-        producto = data;
-        mostrarProducto(producto);
-    })
-    .catch(error => { 
-        console.log("Error al mostrar el producto: ", error);
-    });
+
+    }else{
+            let item = carro.carrito;
+            const contenedor = document.getElementById("tablaCarrito");
+            contenedor.innerHTML = "";
+            item.forEach(p => {
+                const tableHead = document.createElement("thead");
+                const tableBody = document.createElement("tbody");
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>Producto:</th>
+                        <th>Cantidad:</th>
+                        <th>Precio:</th>
+                    </tr>
+                `;
+                tableBody.innerHTML=`
+                    <tr>
+                        <td>${p.dto.nombre}</td>
+                        <td>${p.cantidad}</td>
+                        <td>${p.precio}</td>
+                    </tr> 
+                `;
+            });
+            
+
+    }
+
+}
+function anadirAlCarrito(id) {
+
 }
 listarProductos();
+obtenerCarrito();
