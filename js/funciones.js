@@ -1,3 +1,5 @@
+const params = new URLSearchParams(window.location.search);
+let id = params.get("id");
 const productosPorPagina = 12;
 let productos = [];
 let paginaActual = 1;
@@ -43,7 +45,7 @@ function actualizarContador() {
     const contador = document.getElementById("contadorCarro");
     contador.textContent = carro.length;
 }
-function mostrarPagina(pagina) {
+function mostrarPagina(productos ,pagina) {
     const contenedor = document.getElementById("contenedorProductos");
     contenedor.innerHTML = "";
     const inicio = (pagina - 1) * productosPorPagina;
@@ -152,9 +154,14 @@ function listarProductos() {
         .then(data => {
             console.log(data);
             productos = data.dtos;
+                if(id){
+                    console.log(id);
+                    filtrarPorCategoria();
+                }
 
             obtenerCarrito();
-            mostrarPagina(1);
+            sliderProductos();
+            mostrarPagina(productos ,1);
             crearPaginacion();
 
 
@@ -338,4 +345,97 @@ function anadirAlCarrito(id) {
 
 
 }
+
+function filtrarProductos(){
+    const orden = document.getElementById("ordenar");
+    const value = orden.value;
+    console.log("Filtro: ", value);
+   let productosFiltrados = [... productos];
+    switch(value){
+        case "precioAsc":
+            productosFiltrados.sort((a, b) => a.precio - b.precio);
+            break;
+        case "precioDesc":
+            productosFiltrados.sort((a, b) => b.precio - a.precio);
+            break;
+        case "rating":
+            productosFiltrados.sort((a,b) => b.rating - a.rating);
+            break;
+        case "nike":
+        case "skecher":
+        case "puma":
+        case "newBalance":
+        case "converse":
+        case "caterpillar":
+        case "adidas":
+            productosFiltrados = productosFiltrados.filter(p => p.marca.toLowerCase() === orden.toLowerCase());
+            break;
+        case "todasLasMarcas":
+            productosFiltrados;
+            break;        
+        default:
+            
+            console.warn("Filtro no encontrado", value);
+            return;
+        }
+    mostrarPagina(productosFiltrados, 1);    
+    crearPaginacion();
+
+}
+
+function filtrarPorCategoria(){
+    let productosFiltrados = [... productos];
+    if(!id){
+        console.error("La id: es null");
+        return;
+    }
+
+    switch(id.toLowerCase()){
+        case "damas":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+            break;
+        case "caballeros":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+        case "unisex":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());        
+        default:
+            console.error("Error, categroia inexistente");
+            break;    
+
+    }
+
+    mostrarPagina(productosFiltrados, 1);
+    crearPaginacion();  
+}
+function sliderProductos(){
+    
+    const sliderTracker = document.getElementById("sliderProductos");
+    sliderTracker.className ="slider-track";
+    sliderTracker.innerHTML = "";
+    const div = document.createElement("div");
+    div.className="slide";
+    
+    let productosFiltrados = productos.sort((a, b) => b.rating - a.rating);
+    productosFiltrados = productosFiltrados.slice(0, 8);
+
+    productosFiltrados.forEach(p =>{
+        const div2 =  document.createElement("div");
+        div2.className="col-4";
+        div2.innerHTML = `
+                    <img src="${p.imageUrl}" alt="">
+                                <h4>Zapatilla deportiva</h4>
+                                <div class="rating">
+                                    ${generarEstrellas(p.rating)}
+                                </div>
+                                <p style="text-decoration: line-through !important; color: red !important;>${p.precio - 50000}</p>
+                                <p>${p.precio}</p>
+        `;
+        div.appendChild(div2);
+        sliderTracker.appendChild(div);
+    });
+    return sliderTracker;
+    
+}
+
 listarProductos();
+

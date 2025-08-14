@@ -43,13 +43,13 @@
                 <div class="modal-contenido">
                     <span id="cerrarModal" class="cerrar" onclick="cerrarCarrito()">&times;</span>
                     <h2>Mi Carrito</h2>
-                    
+
                     <div id="carritoItems">
                         <table id="tablaCarrito" class="table table-striped mt-3">
                             <thead>
-                                
-                                        <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
-                                
+
+                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
+
 
                                 <tr>
                                     <th></th>
@@ -75,11 +75,23 @@
         <div class="small-container">
             <div class="row row-2">
                 <h2>Todos los productos</h2>
-                <select>
-                    <option>Por precio</option>
-                    <option>Por rating</option>
-                    <option>Por marca</option>
-                    <option>Por venta</option>
+                <select id="ordenar" onchange="filtrarProductos()">
+                    <option value="">Ordenar por...</option>
+                    <option value="precioAsc">Precio (menor a mayor)</option>
+                    <option value="precioDesc">Precio (mayor a menor)</option>
+                    <option value="rating">Rating</option>
+                
+
+                <!-- Select para filtrar por marca -->
+                
+                    <option value="todasLasMarcas">Todas las marcas</option>
+                    <option value="nike">Nike</option>
+                    <option value="skecher">Skecher</option>
+                    <option value="puma">Puma</option>
+                    <option value="newBalance">New Balance</option>
+                    <option value="converse">Converse</option>
+                    <option value="caterpillar">Caterpillar</option>
+                    <option value="adidas">Adidas</option>
                 </select>
             </div>
             <div id="contenedorProductos" class="row">
@@ -163,8 +175,7 @@
             modal.style.display = "none";
         }
 
-        $(document).ready(function()
-        {
+        $(document).ready(function () {
             $('#tablaCarrito').DataTable();
         }
         );

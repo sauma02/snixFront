@@ -55,10 +55,9 @@ a img {
     transition: width 0.5s;
 }
 
-a img:hover {
+a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img) {
     width: 150px;
 }
-
 #tituloTexto {
 
     text-decoration: none;
@@ -479,16 +478,22 @@ ul {
 }
 
 
+
 /*Todos los productos*/
 
 .row-2{
     justify-content: space-between;
     margin: 100px auto 50px;
 }
-select{
-    
+select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
     border: 1px solid #dbff47;
-    padding: 5px;
+    margin: 5px;
+    min-width: 200px;
+    background-color: #fff;
+    cursor: pointer;
 }
 
 select:focus{
