@@ -113,7 +113,7 @@ function producto(p) {
                 <br>
                  <a id="botonTituloContraentrega" data-id="${p.id}" href="" class="btn">Comprar ya contraentrega</a>
                  <br> 
-                 <a id="botonTituloTarjeta" data-id="${p.id}" href="" class="btn">Comprar ya con tarjeta</a>
+                 
                 <br>
                 <br>
                 <h3>Detalles del producto<i class="fa fa-indent"></i></h3>

@@ -68,7 +68,48 @@
         </div>
 
     </div>
+    <!--Productos modal form-->
+            <div id="modalFormularioPedido" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar" onclick="cerrarForm()">&times;</span>
+                    <h2>Informacion/Pedido</h2>
 
+                    <div id="formularioPedido">
+                <form id="formularioPedidoWhatsApp" action="" method="post">
+                    <input type="hidden" id="productoId" name="productoId">
+                    
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    
+                    <label for="celular">Celular:</label>
+                    <input type="text" id="celular" name="celular" required>
+                    
+                    <label for="direccion">Dirección y punto de referencia:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
+                    
+                    <label for="depto">Departamento:</label>
+                    <input type="text" id="depto" name="depto" required>
+                    
+                    <div class="autorizacion-container">
+                        <input type="radio" id="autorizacion" name="autorizacion" value="1" required>
+                        <p class="autorizacion-text">
+                            Autorizo el tratamiento de mis datos personales para fines comerciales y de marketing.
+                        </p>
+                    </div>
+                    
+                    <button type="button" id="botonFormulario" onclick="hacerPedido(this)">
+                        Hacer pedido
+                    </button>
+                </form>
+            </div>
+                </div>
+            </div>
 
     <!--Productos destacados-->
     <div id="todosLosProductos" class="container">
@@ -160,6 +201,18 @@
     <script>
         var menuItems = document.getElementById("menuItems");
         var modal = document.getElementById("modalCarrito");
+        var modalFormulario = document.getElementById("modalFormularioPedido");
+
+        function mostrarForm(element){
+            const productoId = element.getAttribute("data-id");
+            document.getElementById("productoId").value = productoId;
+            const botonEnvio = document.getElementById("botonFormulario");
+            botonEnvio.setAttribute("data-id", productoId);
+            modalFormulario.style.display="block";
+        }
+        function cerrarForm(){
+            modalFormulario.style.display = "none";
+        }
         menuItems.style.maxHeight = "0px";
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {

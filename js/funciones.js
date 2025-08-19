@@ -70,15 +70,11 @@ function mostrarPagina(productos ,pagina) {
         <a style="display: block;     
     margin-bottom: 3px;
     margin-top:3px; 
-    text-align: center;" id="botonTituloContraentrega" data-id="${p.id}" href="" class="btn">Comprar ya contraentrega</a>        
+    text-align: center;" id="botonTituloContraentrega" data-id="${p.id}" onclick="mostrarForm(this)" class="btn">Comprar ya contraentrega</a>        
         <a style="display: block;     
     margin-bottom: 3px; 
      margin-top:5px; 
     text-align: center;" href="#" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(${p.id})" href="" class="btn">Añadir al carrito</a>
-        <a style="display: block;     
-    margin-bottom: 3px;
-     margin-top:5px;  
-    text-align: center;" id="botonTituloTarjeta" data-id="${p.id}" href="" class="btn">Comprar ya con tarjeta</a>
         
         `;
 
@@ -86,6 +82,8 @@ function mostrarPagina(productos ,pagina) {
     });
     paginaActual = pagina;
 }
+
+
 
 function generarEstrellas(rating) {
     let estrellas = "";
@@ -160,8 +158,9 @@ function listarProductos() {
                 }
 
             obtenerCarrito();
-            sliderProductos();
+            
             mostrarPagina(productos ,1);
+            sliderProductos();
             crearPaginacion();
 
 
@@ -436,6 +435,47 @@ function sliderProductos(){
     return sliderTracker;
     
 }
+
+function hacerPedido(element){
+    const productoId = element.getAttribute("data-id");
+    const form = document.getElementById("formularioPedidoWhatsApp");
+    const formData = new FormData(form);
+    if(formData.get("autorizacion") === 1){
+        formData.set("autorizacion", "autorizado");
+    }
+    fetch(`http://localhost:1000/home/producto/pedido/form/${productoId}`, {
+        method: "POST",
+        body: formData
+
+    }).then(response => {
+        if(!response.ok){
+            throw new Error(`Error inesperado: ${response.status}`);
+        }
+        return response.json();
+    }).then(data => {
+        if(data.clase === "error"){
+            console.error(data.mensaje);
+            return;
+        }   
+        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}. Mis datos son:\n
+        Nombre: ${formData.get("nombre")}\n
+        Teléfono: ${formData.get("telefono")}\n
+        Dirección: ${formData.get("direccion")}\n
+        Ciudad: ${formData.get("ciudad")}\n
+        Departamento: ${formData.get("departamento")}\n
+        Correo electrónico: ${formData.get("email")}`;
+        const urlWhatsApp = `https://wa.me/573127764576?text=${encodeURIComponent(mensaje)}`;
+        alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
+        window.open(urlWhatsApp, "_blank");
+        cerrarForm();
+           
+
+    }).catch(error => {
+        console.error("Error inesperado: ", error);
+    });
+    
+}
+
 
 listarProductos();
 
