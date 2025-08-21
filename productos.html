@@ -82,7 +82,7 @@
                     <input type="text" id="nombre" name="nombre" required>
                     
                     <label for="celular">Celular:</label>
-                    <input type="text" id="celular" name="celular" required>
+                    <input type="text" id="contacto" name="contacto" required>
                     
                     <label for="direccion">Dirección y punto de referencia:</label>
                     <input type="text" id="direccion" name="direccion" required>
@@ -205,9 +205,13 @@
 
         function mostrarForm(element){
             const productoId = element.getAttribute("data-id");
+            console.log(productoId);
             document.getElementById("productoId").value = productoId;
+            console.log(document.getElementById("productoId").value);
             const botonEnvio = document.getElementById("botonFormulario");
             botonEnvio.setAttribute("data-id", productoId);
+            console.log(botonEnvio);
+            
             modalFormulario.style.display="block";
         }
         function cerrarForm(){

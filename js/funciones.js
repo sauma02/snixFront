@@ -1,3 +1,5 @@
+
+let csrfToken;
 const params = new URLSearchParams(window.location.search);
 let id = params.get("id");
 const productosPorPagina = 12;
@@ -435,18 +437,42 @@ function sliderProductos(){
     return sliderTracker;
     
 }
+/*async function getCsrfToken(){
 
-function hacerPedido(element){
+    fetch("http://localhost:1000/home/csrf-token", {
+        method: "GET",
+        headers: {
+            "Content-type":"applicaction/json"
+        }
+
+    }).then(response => {
+        if(!response.ok){
+            throw new Error(`Error al traer respuesta: ${response.status}`);
+        }
+        return response.json();
+    }).then(data => {
+        csrfToken = data;
+        console.log(csrfToken);
+    }).catch(error => {
+        console.log("Error inesperado: ", error);
+    })
+}*/
+
+async function hacerPedido(element){
     const productoId = element.getAttribute("data-id");
+    console.log("4: ", productoId);
     const form = document.getElementById("formularioPedidoWhatsApp");
     const formData = new FormData(form);
-    if(formData.get("autorizacion") === 1){
+    if(formData.get("autorizacion") === "1"){
         formData.set("autorizacion", "autorizado");
     }
     fetch(`http://localhost:1000/home/producto/pedido/form/${productoId}`, {
         method: "POST",
-        body: formData
-
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(form)
+    
     }).then(response => {
         if(!response.ok){
             throw new Error(`Error inesperado: ${response.status}`);
@@ -468,6 +494,7 @@ function hacerPedido(element){
         alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
         window.open(urlWhatsApp, "_blank");
         cerrarForm();
+        return;
            
 
     }).catch(error => {
@@ -476,6 +503,6 @@ function hacerPedido(element){
     
 }
 
-
+//getCsrfToken();
 listarProductos();
 
