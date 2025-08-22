@@ -8,6 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
     <script src="js/productoDetalles.js"></script>
 </head>
 
@@ -29,13 +34,82 @@
                 </ul>
 
             </nav>
-            <a id="carrito" href="" class="fa-solid fa-cart-shopping">
-                <span class="contador">0</span>
+            <a id="carrito" href="#" onclick="mostrarCarrito()">
+                <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i>
+                <span id="contadorCarro" class="contador">0</span>
             </a>
+            <div id="modalCarrito" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar" onclick="cerrarCarrito()">&times;</span>
+                    <h2>Mi Carrito</h2>
+
+                    <div id="carritoItems">
+                        <table id="tablaCarrito" class="table table-striped mt-3">
+                            <thead>
+
+                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
+
+
+                                <tr>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <a id="menuBar" class="fa-solid fa-bars" onclick="menutoggle()"></a>
         </div>
        
     </div>
+    <!--Productos modal form-->
+            <div id="modalFormularioPedido" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar" onclick="cerrarForm()">&times;</span>
+                    <h2>Informacion/Pedido</h2>
+
+                    <div id="formularioPedido">
+                <form id="formularioPedidoWhatsApp" action="" method="post">
+                    
+                    
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    
+                    <label for="contacto">Contacto:</label>
+                    <input type="text" id="contacto" name="contacto" required>
+                    
+                    <label for="direccion">Dirección y punto de referencia:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
+                    
+                    <label for="depto">Departamento:</label>
+                    <input type="text" id="depto" name="depto" required>
+                    
+                    <div class="autorizacion-container">
+                        <input type="radio" id="autorizacion" name="autorizacion" value="1" required>
+                        <p class="autorizacion-text">
+                            Autorizo el tratamiento de mis datos personales para fines comerciales y de marketing.
+                        </p>
+                    </div>
+                    
+                    <button type="button" id="botonFormulario" onclick="hacerPedido(this)">
+                        Hacer pedido
+                    </button>
+                </form>
+            </div>
+                </div>
+            </div>
+
     
 
     <!--Productos detalle-->
@@ -80,7 +154,7 @@
                 <br>
                  <a id="botonTituloContraentrega" href="" class="btn">Comprar ya contraentrega</a>
                  <br> 
-                 <a id="botonTituloTarjeta" href="" class="btn">Comprar ya con tarjeta</a>
+         
                 <br>
                 <br>
                 <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
@@ -149,7 +223,8 @@
     <!--jstogglemenu-->
     <script>
         var menuItems = document.getElementById("menuItems");
-
+        const modal = document.getElementById("modalCarrito");
+        var modalFormulario = document.getElementById("modalFormularioPedido");
         menuItems.style.maxHeight = "0px";
         function menutoggle(){
             if(menuItems.style.maxHeight == "0px" ){
@@ -158,6 +233,37 @@
                 menuItems.style.maxHeight = "0px";
             }
         }
+
+
+        function mostrarCarrito() {
+           
+            modal.style.display = "block";
+        }
+        function cerrarCarrito() {
+         
+            modal.style.display = "none";
+        }
+     
+
+        function mostrarForm(element){
+            const productoId = element.getAttribute("data-id");
+            console.log(productoId);
+            
+           
+            const botonEnvio = document.getElementById("botonFormulario");
+            botonEnvio.setAttribute("data-id", productoId);
+            console.log(botonEnvio);
+            
+            modalFormulario.style.display="block";
+        }
+        function cerrarForm(){
+            modalFormulario.style.display = "none";
+        }
+
+        $(document).ready(function () {
+            $('#tablaCarrito').DataTable();
+        }
+        );
 
     </script>
 

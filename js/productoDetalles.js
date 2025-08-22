@@ -1,8 +1,141 @@
+
 const params = new URLSearchParams(window.location.search);
+
 const id = params.get("id");
 let recomendados = [];
 const desc = 50000.00;
 let produ;
+let carro = JSON.parse(localStorage.getItem("carro")) || [];
+
+
+function mapearCarrito(carro) {
+
+    if (carro.clase == "error") {
+        console.error(carro.mensaje);
+        if (carro.carrito.length === 0) {
+
+            const contenedor = document.getElementById("tablaCarrito");
+            contenedor.innerHTML = "";
+
+            const tableHead = document.createElement("thead");
+            const tableBody = document.createElement("tbody");
+            tableHead.innerHTML = `
+            
+
+            <tr>
+                <th>No hay productos registrados</th>
+            </tr>
+        `;
+            tableBody.innerHTML = `
+            <tr>
+                <td>No hay productos registrados</td>
+            </tr>
+        `;
+
+            contenedor.appendChild(tableHead);
+            contenedor.appendChild(tableBody);
+            return contenedor;
+
+
+        }
+
+    } else {
+
+        const contenedor = document.getElementById("tablaCarrito");
+        contenedor.innerHTML = "";
+        const tableHead = document.createElement("thead");
+
+        tableHead.innerHTML = `
+                    <tr>
+                        <th>Producto:</th>
+                        <th>Cantidad:</th>
+                        <th>Subtotal:</th>
+                        <th>Accion:</th>
+
+                    </tr>
+                `;
+        const tableBody = document.createElement("tbody");
+        let total = 0;
+        carro.forEach(p => {
+            const subTotal = p.precio * p.cantidad;
+            total += subTotal;
+
+
+            tableBody.innerHTML += `
+                    <tr>
+                        <td>${p.nombre}</td>
+                        <td>
+                        <input
+                            type="number"
+                            min="1"
+                            value="${p.cantidad}"
+                            onchange="cambiarCantidad(${p.id}, this.value)"
+                            style="width: 50px; 
+        height: 30px; 
+        padding: 5px; 
+        text-align: center; 
+        font-size: 16px;
+        border: 1px solid #ccc; 
+        border-radius: 5px;"
+                        >
+                        </td>
+                        <td>${subTotal.toLocaleString()}</td>
+                        <td><a style="display: inline-block;
+    align-items: center;
+    flex-wrap: wrap;
+    color: black;
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    justify-content: space-around;
+    transition: transform 0.5s;
+    background: red;
+    cursor: pointer;
+    " onclick="eliminarProducto(${p.id})">Eliminar</a></td>
+                    </tr>
+                    
+                        
+                `;
+
+        });
+        tableBody.innerHTML += `
+                   <tr>
+                        <td>Total: </td>
+                        <td>${total.toLocaleString()}</td>
+                    </tr> `;
+
+        contenedor.appendChild(tableHead);
+        contenedor.appendChild(tableBody);
+
+        actualizarContador();
+
+
+
+    }
+
+}
+function cambiarCantidad(id, cantidad) {
+    nuevaCantidad = parseInt(cantidad);
+    if (nuevaCantidad < 1 || isNaN(nuevaCantidad)) {
+        console.error("La cantidad no puede ser menor a 1");
+        return;
+    }
+
+    const producto = carro.find(pro => pro.id == id);
+
+    if (producto) {
+        producto.cantidad = nuevaCantidad;
+
+    }
+
+    localStorage.setItem("carro", JSON.stringify(carro));
+    mapearCarrito(carro);
+
+}
+function actualizarContador() {
+    const contador = document.getElementById("contadorCarro");
+    contador.textContent = carro.length;
+}
 
 function todosLosProductos(){
 
@@ -24,6 +157,7 @@ function todosLosProductos(){
         
         
         productosRecomendados(data);
+        mapearCarrito(carro);
 
     }).catch(error => {
         console.error("Error: ", error);
@@ -109,9 +243,9 @@ function producto(p) {
                 </select>
                 <br>
                 <input type="number" value="1">
-                <a id="botonAñadirAlCarrito" data-id="${p.id}" href="" class="btn">Añadir al carrito</a>
+                <a style="cursor:pointer;" id="botonAñadirAlCarrito" data-id="${p.id}" class="btn">Añadir al carrito</a>
                 <br>
-                 <a id="botonTituloContraentrega" data-id="${p.id}" href="" class="btn">Comprar ya contraentrega</a>
+                 <a style="cursor:pointer;"id="botonTituloContraentrega" data-id="${p.id}" onclick="mostrarForm(this)" class="btn">Comprar ya contraentrega</a>
                  <br> 
                  
                 <br>
@@ -159,6 +293,58 @@ function productosRecomendados(rec){
     contenedor.appendChild(div);
     });
     return contenedor;
+    
+}
+async function hacerPedido(element){
+    const form = document.getElementById('formularioPedidoWhatsApp');
+    
+    
+    const productoId = element.getAttribute("data-id");
+    const formData = new FormData(form);
+    
+    
+    for(let [key, value] of formData.entries()){
+        
+        console.log(key, value);
+    }
+
+    formData.append("productoId", productoId);
+   
+    if(formData.get("autorizacion") === "1"){
+        formData.set("autorizacion", "autorizado");
+    }
+    fetch(`http://localhost:1000/home/producto/pedido/form`, {
+        method: "POST",
+        
+        body: formData
+    
+    }).then(response => {
+        if(!response.ok){
+            throw new Error(`Error inesperado: ${response.status}`);
+        }
+        return response.json();
+    }).then(data => {
+        if(data.clase === "error"){
+            console.error(data.mensaje);
+            return;
+        }   
+        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}. Mis datos son:\n
+        Nombre: ${formData.get("nombre")}\n
+        Teléfono: ${formData.get("contacto")}\n
+        Dirección: ${formData.get("direccion")}\n
+        Ciudad: ${formData.get("ciudad")}\n
+        Departamento: ${formData.get("depto")}\n
+        Correo electrónico: ${formData.get("email")}`;
+        const urlWhatsApp = `https://wa.me/573127764576?text=${encodeURIComponent(mensaje)}`;
+        alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
+        window.open(urlWhatsApp, "_blank");
+        cerrarForm();
+        return;
+           
+
+    }).catch(error => {
+        console.error("Error inesperado: ", error);
+    });
     
 }
 

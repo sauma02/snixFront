@@ -459,19 +459,27 @@ function sliderProductos(){
 }*/
 
 async function hacerPedido(element){
+    const form = document.getElementById('formularioPedidoWhatsApp');
+    
+    
     const productoId = element.getAttribute("data-id");
-    console.log("4: ", productoId);
-    const form = document.getElementById("formularioPedidoWhatsApp");
     const formData = new FormData(form);
+    
+    
+    for(let [key, value] of formData.entries()){
+        
+        console.log(key, value);
+    }
+
+    formData.append("productoId", productoId);
+   
     if(formData.get("autorizacion") === "1"){
         formData.set("autorizacion", "autorizado");
     }
-    fetch(`http://localhost:1000/home/producto/pedido/form/${productoId}`, {
+    fetch(`http://localhost:1000/home/producto/pedido/form`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(form)
+        
+        body: formData
     
     }).then(response => {
         if(!response.ok){
@@ -485,10 +493,10 @@ async function hacerPedido(element){
         }   
         const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}. Mis datos son:\n
         Nombre: ${formData.get("nombre")}\n
-        Teléfono: ${formData.get("telefono")}\n
+        Teléfono: ${formData.get("contacto")}\n
         Dirección: ${formData.get("direccion")}\n
         Ciudad: ${formData.get("ciudad")}\n
-        Departamento: ${formData.get("departamento")}\n
+        Departamento: ${formData.get("depto")}\n
         Correo electrónico: ${formData.get("email")}`;
         const urlWhatsApp = `https://wa.me/573127764576?text=${encodeURIComponent(mensaje)}`;
         alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");

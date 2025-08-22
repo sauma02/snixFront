@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestros productos - SnixCo</title>
+    <title>Producto - SnixCo</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
 
-    <script src="js/funciones.js"></script>
+       <script src="js/funciones.js"></script>
 </head>
 
 <body>
@@ -76,12 +76,12 @@
 
                     <div id="formularioPedido">
                 <form id="formularioPedidoWhatsApp" action="" method="post">
-                    <input type="hidden" id="productoId" name="productoId">
+                    
                     
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" required>
                     
-                    <label for="celular">Celular:</label>
+                    <label for="contacto">Contacto:</label>
                     <input type="text" id="contacto" name="contacto" required>
                     
                     <label for="direccion">Dirección y punto de referencia:</label>
@@ -196,6 +196,7 @@
 
         </div>
     </div>
+ 
 
     <!--jstogglemenu-->
     <script>
@@ -206,8 +207,8 @@
         function mostrarForm(element){
             const productoId = element.getAttribute("data-id");
             console.log(productoId);
-            document.getElementById("productoId").value = productoId;
-            console.log(document.getElementById("productoId").value);
+            
+           
             const botonEnvio = document.getElementById("botonFormulario");
             botonEnvio.setAttribute("data-id", productoId);
             console.log(botonEnvio);
