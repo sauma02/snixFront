@@ -85,6 +85,10 @@ function mostrarPagina(productos ,pagina) {
     paginaActual = pagina;
 }
 
+function hacerPedidoCarrito(carrito){
+    const carrito = JSON.parse(localStorage.getItem("carro")) || [];
+}
+
 
 
 function generarEstrellas(rating) {
@@ -463,6 +467,26 @@ async function hacerPedido(element){
     
     
     const productoId = element.getAttribute("data-id");
+    const productoNombre = await fetch(`http://localhost:1000/home/productos/detallesProducto/${productoId}`,{
+        method : "GET",
+        headers : {
+            "Content-type" : "application/json"
+        }
+    })
+    .then(response => {
+        if(!response.ok){
+            console.error("Error al traer producto");
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        return data.dto;
+    })
+    .catch(error =>{
+        console.error("Error:", error);
+    })
+
     const formData = new FormData(form);
     
     
@@ -470,7 +494,8 @@ async function hacerPedido(element){
         
         console.log(key, value);
     }
-
+    
+    
     formData.append("productoId", productoId);
    
     if(formData.get("autorizacion") === "1"){
@@ -491,7 +516,8 @@ async function hacerPedido(element){
             console.error(data.mensaje);
             return;
         }   
-        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}. Mis datos son:\n
+        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}, ${productoNombre.nombre}.\n 
+        Mis datos son:\n
         Nombre: ${formData.get("nombre")}\n
         Teléfono: ${formData.get("contacto")}\n
         Dirección: ${formData.get("direccion")}\n

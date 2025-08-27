@@ -307,7 +307,7 @@ async function hacerPedido(element){
         
         console.log(key, value);
     }
-
+    formData.append("nombreProducto: ", produ.nombre);
     formData.append("productoId", productoId);
    
     if(formData.get("autorizacion") === "1"){
