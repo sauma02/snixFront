@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SnixCo</title>
+    <link rel="icon" href="images/Snik-logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
@@ -48,7 +49,7 @@
                         <table id="tablaCarrito" class="table table-striped mt-3">
                             <thead>
 
-                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
+                               
 
 
                                 <tr>
@@ -81,6 +82,48 @@
             </div>
         </div>
     </div>
+    <!-- modal formPedido Carro-->
+    <div id="modalFormularioPedido" class="modal">
+                <div class="modal-contenido">
+                    <span id="cerrarModal" class="cerrar" onclick="cerrarForm()">&times;</span>
+                    <h2>Informacion/Pedido</h2>
+
+                    <div id="formularioPedido">
+                <form id="formularioPedidoWhatsApp" action="" method="post">
+                    
+                    
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    
+                    <label for="contacto">Contacto:</label>
+                    <input type="text" id="contacto" name="contacto" required>
+                    
+                    <label for="direccion">Dirección y punto de referencia:</label>
+                    <input type="text" id="direccion" name="direccion" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    
+                    <label for="ciudad">Ciudad:</label>
+                    <input type="text" id="ciudad" name="ciudad" required>
+                    
+                    <label for="depto">Departamento:</label>
+                    <input type="text" id="depto" name="depto" required>
+                    
+                    <div class="autorizacion-container">
+                        <input type="radio" id="autorizacion" name="autorizacion" value="1" required>
+                        <p class="autorizacion-text">
+                            Autorizo el tratamiento de mis datos personales para fines comerciales y de marketing.
+                        </p>
+                    </div>
+                    
+                    <button type="button" id="botonFormulario" onclick="hacerPedidoCarrito(carrito)">
+                        Hacer pedido
+                    </button>
+                </form>
+            </div>
+                </div>
+            </div>
     <!-- Categorias destacadas -->
     <div id="categoriasDestacadas" class="container">
         <div class="categorias">
@@ -535,6 +578,18 @@
     <script>
         var menuItems = document.getElementById("menuItems");
         var modal = document.getElementById("modalCarrito");
+        var modalFormulario = document.getElementById("modalFormularioPedido");
+
+
+        function mostrarForm(){
+            modalFormulario.style.display = "block";
+        }
+        function cerrarForm(){
+            modalFormulario.style.display = "none";
+        }
+
+
+
         menuItems.style.maxHeight = "0px";
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {

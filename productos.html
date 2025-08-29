@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Producto - SnixCo</title>
+    <title>Productos - SnixCo</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/Snik-logo.png">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -48,7 +49,7 @@
                         <table id="tablaCarrito" class="table table-striped mt-3">
                             <thead>
 
-                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
+                                
 
 
                                 <tr>
@@ -208,7 +209,18 @@
         var modalFormulario = document.getElementById("modalFormularioPedido");
 
         function mostrarForm(element){
+            if(!element){
+                const button = document.getElementById("botonFormulario");
+                button.innerHTML = `
+                <button type="button" id="botonFormulario" onclick="hacerPedidoCarrito()">
+                        Hacer pedido
+                    </button>`;
+                
+                modalFormulario.style.display="block";
+                return;
+            }
             const productoId = element.getAttribute("data-id");
+            
             console.log(productoId);
             
            

@@ -1,4 +1,4 @@
-
+document.charset = "UTF-8";
 let csrfToken;
 const params = new URLSearchParams(window.location.search);
 let id = params.get("id");
@@ -47,7 +47,7 @@ function actualizarContador() {
     const contador = document.getElementById("contadorCarro");
     contador.textContent = carro.length;
 }
-function mostrarPagina(productos ,pagina) {
+function mostrarPagina(productos, pagina) {
     const contenedor = document.getElementById("contenedorProductos");
     contenedor.innerHTML = "";
     const inicio = (pagina - 1) * productosPorPagina;
@@ -84,9 +84,101 @@ function mostrarPagina(productos ,pagina) {
     });
     paginaActual = pagina;
 }
+function textEmoji(mensaje){
+     const emojiMap = {
+        '👋': '👋',
+        '🚚': '🚚', 
+        '📋': '📋',
+        '📞': '📞',
+        '📍': '📍',
+        '🏙': '🏙',
+        '🌆': '🌆',
+        '🛍': '🛍',
+        '💰': '💰',
+        '⚡': '⚡',
+        '🚀': '🚀',
+        '👉': '👉',
+        '👇': '👇',
+        '❤️': '❤️'
+    };
+    
+    return mensaje;
+}
+async function hacerPedidoCarrito(carrito) {
+    const form = document.getElementById('formularioPedidoWhatsApp');
+    carrito = carro;
 
-function hacerPedidoCarrito(carrito){
-    const carrito = JSON.parse(localStorage.getItem("carro")) || [];
+
+    console.log(carrito);
+    const formData = new FormData(form);
+
+
+    if (formData.get("autorizacion") === "1") {
+        formData.set("autorizacion", "autorizado");
+
+    }
+    formData.append("productoId", carrito[0].id)
+
+    fetch(`http://localhost:1000/home/producto/pedido/form`, {
+        method: "POST",
+        body: formData
+    }).then(response => {
+        if (!response.ok) {
+            console.error(`Error inesperado: ${response.status}`);
+        }
+
+        return response.json();
+    }).then(data => {
+        if (data.clase === "error") {
+            console.error(`Error: ${data.mensaje}`);
+        }
+
+        let mensaje = `¡Hola ${formData.get("nombre")}! 👋
+
+Tu pedido ya está listo para ser empacado 🚚
+
+📋 *DATOS DE ENTREGA:*
+📞 Celular: ${formData.get("contacto")}
+📍 Dirección: ${formData.get("direccion")}
+🏙 Departamento: ${formData.get("depto")}
+🌆 Ciudad: ${formData.get("ciudad")}
+
+🛍 *TUS PRODUCTOS:*`;
+
+        carrito.forEach(producto => {
+            mensaje += `
+- ${producto.nombre} (x${producto.cantidad}) - $${(producto.cantidad * producto.precio).toLocaleString()}
+  Talla: ${producto.talla}`;
+        });
+
+        const total = carrito.reduce((acc, item) => acc + item.cantidad * item.precio, 0);
+
+        mensaje += `
+
+💰 *TOTAL A PAGAR: $${total.toLocaleString()}*
+
+⚡ *¡CONFIRMA AHORA!* Tu pedido será prioritario en el despacho 🚀
+
+👉 Si todo está correcto, escribe CONFIRMAR 👇
+
+Gracias por confiar en *SNIX.CO* ❤️`;
+
+
+        mensaje = encodeURIComponent(mensaje);
+        
+        const urlWhatsApp = `https://api.whatsapp.com/send/?phone=573127764576&text=${mensaje}`;
+        
+        alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
+        window.open(urlWhatsApp, "_blank");
+        cerrarForm();
+        return;
+
+
+
+
+    }).catch(error => {
+        console.error(`Error: ${error}`);
+    })
 }
 
 
@@ -158,14 +250,14 @@ function listarProductos() {
         .then(data => {
             console.log(data);
             productos = data.dtos;
-                if(id){
-                    console.log(id);
-                    filtrarPorCategoria();
-                }
+            if (id) {
+                console.log(id);
+                filtrarPorCategoria();
+            }
 
             obtenerCarrito();
-            
-            mostrarPagina(productos ,1);
+
+            mostrarPagina(productos, 1);
             sliderProductos();
             crearPaginacion();
 
@@ -239,7 +331,9 @@ function mapearCarrito(carro) {
         contenedor.innerHTML = "";
         const tableHead = document.createElement("thead");
 
+
         tableHead.innerHTML = `
+                    <a id="botonCarrito" type="button" onclick="mostrarForm()" href="#">Hacer pedido</a>
                     <tr>
                         <th>Producto:</th>
                         <th>Cantidad:</th>
@@ -351,12 +445,12 @@ function anadirAlCarrito(id) {
 
 }
 
-function filtrarProductos(){
+function filtrarProductos() {
     const orden = document.getElementById("ordenar");
     const value = orden.value;
     console.log("Filtro: ", value);
-   let productosFiltrados = [... productos];
-    switch(value){
+    let productosFiltrados = [...productos];
+    switch (value) {
         case "precioAsc":
             productosFiltrados.sort((a, b) => a.precio - b.precio);
             break;
@@ -364,7 +458,7 @@ function filtrarProductos(){
             productosFiltrados.sort((a, b) => b.precio - a.precio);
             break;
         case "rating":
-            productosFiltrados.sort((a,b) => b.rating - a.rating);
+            productosFiltrados.sort((a, b) => b.rating - a.rating);
             break;
         case "nike":
         case "skecher":
@@ -377,55 +471,55 @@ function filtrarProductos(){
             break;
         case "todasLasMarcas":
             productosFiltrados;
-            break;        
+            break;
         default:
-            
+
             console.warn("Filtro no encontrado", value);
             return;
-        }
-    mostrarPagina(productosFiltrados, 1);    
+    }
+    mostrarPagina(productosFiltrados, 1);
     crearPaginacion();
 
 }
 
-function filtrarPorCategoria(){
-    let productosFiltrados = [... productos];
-    if(!id){
+function filtrarPorCategoria() {
+    let productosFiltrados = [...productos];
+    if (!id) {
         console.error("La id: es null");
         return;
     }
 
-    switch(id.toLowerCase()){
+    switch (id.toLowerCase()) {
         case "damas":
             productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
             break;
         case "caballeros":
             productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
         case "unisex":
-            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());        
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
         default:
             console.error("Error, categroia inexistente");
-            break;    
+            break;
 
     }
 
     mostrarPagina(productosFiltrados, 1);
-    crearPaginacion();  
+    crearPaginacion();
 }
-function sliderProductos(){
-    
+function sliderProductos() {
+
     const sliderTracker = document.getElementById("sliderProductos");
-    sliderTracker.className ="slider-track";
+    sliderTracker.className = "slider-track";
     sliderTracker.innerHTML = "";
     const div = document.createElement("div");
-    div.className="slide";
-    
+    div.className = "slide";
+
     let productosFiltrados = productos.sort((a, b) => b.rating - a.rating);
     productosFiltrados = productosFiltrados.slice(0, 8);
 
-    productosFiltrados.forEach(p =>{
-        const div2 =  document.createElement("div");
-        div2.className="col-4";
+    productosFiltrados.forEach(p => {
+        const div2 = document.createElement("div");
+        div2.className = "col-4";
         div2.innerHTML = `
                     <img src="${p.imageUrl}" alt="">
                                 <h4>Zapatilla deportiva</h4>
@@ -439,7 +533,7 @@ function sliderProductos(){
         sliderTracker.appendChild(div);
     });
     return sliderTracker;
-    
+
 }
 /*async function getCsrfToken(){
 
@@ -462,79 +556,95 @@ function sliderProductos(){
     })
 }*/
 
-async function hacerPedido(element){
+async function hacerPedido(element) {
     const form = document.getElementById('formularioPedidoWhatsApp');
-    
-    
+
+
     const productoId = element.getAttribute("data-id");
-    const productoNombre = await fetch(`http://localhost:1000/home/productos/detallesProducto/${productoId}`,{
-        method : "GET",
-        headers : {
-            "Content-type" : "application/json"
+    const productoNombre = await fetch(`http://localhost:1000/home/productos/detallesProducto/${productoId}`, {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json"
         }
     })
-    .then(response => {
-        if(!response.ok){
-            console.error("Error al traer producto");
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-        return data.dto;
-    })
-    .catch(error =>{
-        console.error("Error:", error);
-    })
+        .then(response => {
+            if (!response.ok) {
+                console.error("Error al traer producto");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            return data.dto;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        })
 
     const formData = new FormData(form);
-    
-    
-    for(let [key, value] of formData.entries()){
-        
+
+
+    for (let [key, value] of formData.entries()) {
+
         console.log(key, value);
     }
-    
-    
+
+
     formData.append("productoId", productoId);
-   
-    if(formData.get("autorizacion") === "1"){
+
+    if (formData.get("autorizacion") === "1") {
         formData.set("autorizacion", "autorizado");
     }
     fetch(`http://localhost:1000/home/producto/pedido/form`, {
         method: "POST",
-        
+
         body: formData
-    
+
     }).then(response => {
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error(`Error inesperado: ${response.status}`);
         }
         return response.json();
     }).then(data => {
-        if(data.clase === "error"){
+        if (data.clase === "error") {
             console.error(data.mensaje);
             return;
-        }   
-        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}, ${productoNombre.nombre}.\n 
-        Mis datos son:\n
-        Nombre: ${formData.get("nombre")}\n
-        Teléfono: ${formData.get("contacto")}\n
-        Dirección: ${formData.get("direccion")}\n
-        Ciudad: ${formData.get("ciudad")}\n
-        Departamento: ${formData.get("depto")}\n
-        Correo electrónico: ${formData.get("email")}`;
-        const urlWhatsApp = `https://wa.me/573127764576?text=${encodeURIComponent(mensaje)}`;
+        }
+        const mensaje = `
+*¡Hola ${formData.get("nombre")}* 👋
+
+Tu pedido ya está listo para ser empacado 🚚
+
+📋 *DATOS DE ENTREGA*:
+📞 Celular: ${formData.get("contacto")}
+📍 Dirección: ${formData.get("direccion")}
+🏙 Departamento: ${formData.get("depto")}
+🌆 Ciudad: ${formData.get("ciudad")}
+
+🛍 *TUS PRODUCTOS*:
+- ${productoNombre.nombre} (${productoNombre.cantidad}) - $${productoNombre.precio * productoNombre.cantidad}
+  Talla: ${productoNombre.talla};
+
+💰 TOTAL A PAGAR: $${productoNombre.precio * productoNombre.cantidad}
+
+⚡ ¡CONFIRMA AHORA! Tu pedido será prioritario en el despacho 🚀
+
+👉 Si todo está correcto, escribe CONFIRMAR 👇
+
+Gracias por confiar en SNIX.CO ❤️`;
+
+        mensaje = encodeURIComponent(mensaje);
+        const urlWhatsApp = `https://api.whatsapp.com/send/?phone=573127764576&text=${mensaje}`;
         alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
         window.open(urlWhatsApp, "_blank");
         cerrarForm();
         return;
-           
+
 
     }).catch(error => {
         console.error("Error inesperado: ", error);
     });
-    
+
 }
 
 //getCsrfToken();
