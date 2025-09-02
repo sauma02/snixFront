@@ -29,8 +29,9 @@
                 <ul id="menuItems">
                     <il><a href="index.html">Home</a></il>
                     <il><a href="productos.html">Productos</a></il>
-                    <il><a href="">Nosotros</a></il>
-                    <il><a href="">Contactanos</a></il>
+                    <il><a href="index.html#nosotros">Nosotros</a></il>
+                    <il><a href="#redes">Redes</a></il>
+                    <il><a href="https://wa.me/573127764576?text=Quiero informacion de productos">Contactanos</a></il>
                 </ul>
 
             </nav>
@@ -47,7 +48,6 @@
                         <table id="tablaCarrito" class="table table-striped mt-3">
                             <thead>
 
-                                <a id="botonCarrito" type="button" href="#">Hacer pedido</a>
 
 
                                 <tr>
@@ -65,113 +65,114 @@
             </div>
             <a id="menuBar" class="fa-solid fa-bars" onclick="menutoggle()"></a>
         </div>
-       
+
     </div>
     <!--Productos modal form-->
-            <div id="modalFormularioPedido" class="modal">
-                <div class="modal-contenido">
-                    <span id="cerrarModal" class="cerrar" onclick="cerrarForm()">&times;</span>
-                    <h2>Informacion/Pedido</h2>
+    <div id="modalFormularioPedido" class="modal">
+        <div class="modal-contenido">
+            <span id="cerrarModal" class="cerrar" onclick="cerrarForm()">&times;</span>
+            <h2>Informacion/Pedido</h2>
 
-                    <div id="formularioPedido">
+            <div id="formularioPedido">
                 <form id="formularioPedidoWhatsApp" action="" method="post">
-                    
-                    
+
+
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" required>
-                    
+
                     <label for="contacto">Contacto:</label>
                     <input type="text" id="contacto" name="contacto" required>
-                    
+
                     <label for="direccion">Dirección y punto de referencia:</label>
                     <input type="text" id="direccion" name="direccion" required>
-                    
+
                     <label for="email">Email:</label>
                     <input type="email" id="email" name="email" required>
-                    
+
                     <label for="ciudad">Ciudad:</label>
                     <input type="text" id="ciudad" name="ciudad" required>
-                    
+
                     <label for="depto">Departamento:</label>
                     <input type="text" id="depto" name="depto" required>
-                    
+
                     <div class="autorizacion-container">
                         <input type="radio" id="autorizacion" name="autorizacion" value="1" required>
                         <p class="autorizacion-text">
                             Autorizo el tratamiento de mis datos personales para fines comerciales y de marketing.
                         </p>
                     </div>
-                    
+
                     <button type="button" id="botonFormulario" onclick="hacerPedido(this)">
                         Hacer pedido
                     </button>
                 </form>
             </div>
-                </div>
-            </div>
+        </div>
+    </div>
 
-    
+
 
     <!--Productos detalle-->
 
-    
+
 
 
     <div id="detalleProducto" class="container">
-    <div class="small-container producto-individual">
-        <div id="rowProducto" class="row">
-            <div class="col-2">
-                <img id="imagenProducto" src="images/nige2-removebg-preview-removebg-preview (1).png" alt="" width="100%">
-                <div class="small-image-row">
-                    <div class="small-img-col">
-                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+        <div class="small-container producto-individual">
+            <div id="rowProducto" class="row">
+                <div class="col-2">
+                    <img id="imagenProducto" src="images/nige2-removebg-preview-removebg-preview (1).png" alt=""
+                        width="100%">
+                    <div class="small-image-row">
+                        <div class="small-img-col">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                        </div>
+                        <div class="small-img-col">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                        </div>
                     </div>
-                    <div class="small-img-col">
-                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
-                    </div>
-                </div>
-            
-            </div>
-            <div class="col-2">
-                <p>Zapatilla / Generica</p>
-                <h1>Zapatilla HH1 de Mike</h1>
-                <h4>$150.000$</h4>
-                <select name="" id="">
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                </select>
-                <br>
-                <input type="number" value="1">
-                <a id="botonAñadirAlCarrito" href="" class="btn">Añadir al carrito</a>
-                <br>
-                 <a id="botonTituloContraentrega" href="" class="btn">Comprar ya contraentrega</a>
-                 <br> 
-         
-                <br>
-                <br>
-                <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
-                <br>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                    Deleniti assumenda id perferendis libero, consectetur nihil 
-                    quasi magnam cum soluta recusandae earum necessitatibus quam 
-                    quod facilis nemo odit excepturi. Maxime, nihil?</p>
 
+                </div>
+                <div class="col-2">
+                    <p>Zapatilla / Generica</p>
+                    <h1>Zapatilla HH1 de Mike</h1>
+                    <h4>$150.000$</h4>
+                    <select name="" id="">
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                        <option></option>
+                    </select>
+                    <br>
+                    <input type="number" value="1">
+                    <a id="botonAñadirAlCarrito" href="" class="btn">Añadir al carrito</a>
+                    <br>
+                    <a id="botonTituloContraentrega" href="" class="btn">Comprar ya contraentrega</a>
+                    <br>
+
+                    <br>
+                    <br>
+                    <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
+                    <br>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                        Deleniti assumenda id perferendis libero, consectetur nihil
+                        quasi magnam cum soluta recusandae earum necessitatibus quam
+                        quod facilis nemo odit excepturi. Maxime, nihil?</p>
+
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     <div id="todosLosProductos" class="container">
         <div class="small-container">
-            
+
             <div id="rowRecomendados" class="row">
                 <div class="col-4">
                     <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
@@ -179,47 +180,48 @@
                 </div>
             </div>
         </div>
-       
+
     </div>
     <a class="fixedButton" href="https://wa.me/573127764576?text=Quiero informacion de productos">
-         <img src="images/WhatsApp.svg.webp" width="125px">
-      </a>
-  
+        <img src="images/WhatsApp.svg.webp" width="125px">
+    </a>
+
     <!--footer-->
 
     <div id="footer" class="container">
         <div class="small-container">
             <div class="row">
-                <div class="footer-col-1">
+                <div id="redes" class="footer-col-1">
                     <h3>Nuestras redes sociales</h3>
                     <p>Siguenos</p>
                     <div class="app-logo">
-                        <img src="images/facebook-logo-facebook-icon-transparent-free-png.webp">
-                        <img src="images/Instagram_icon.png">
-                        <img src="images/WhatsApp.svg.webp" alt="">
+                        <a href=""><img src="images/facebook-logo-facebook-icon-transparent-free-png.webp"></a>
+                        <a href=""><img src="images/Instagram_icon.png"></a>
+                        <a href="https://wa.me/573127764576?text=Quiero informacion de productos"><img src="images/WhatsApp.svg.webp" alt=""></a>
                     </div>
-                
-                
+
+
                 </div>
                 <div class="footer-col-2">
                     <img src="images/Snik-logo.png" alt="">
                     <p>Nuestra razon de ser es tu comidad, pide ya que esperas</p>
-                <hr class="hrLine">
-                <p class="copyright">Copyright 2025 - SnixCo</p>
+                    <hr class="hrLine">
+                    <p class="copyright">Copyright 2025 - SnixCo</p>
                 </div>
-                
+
                 <div class="footer-col-3">
                     <h3>Enlances</h3>
                     <ul>
-                        <li>Home</li>
-                        <li>Productos</li>
-                        <li>Contactos</li>
-                        
+                        <il><a href="index.html">Home</a></il>
+                        <il><a href="productos.html">Productos</a></il>
+                        <il><a href="index.html#nosotros">Nosotros</a></il>
+                        <il><a href="https://wa.me/573127764576?text=Quiero informacion de productos">Contactanos</a></il>
+
                     </ul>
                 </div>
-               
+
             </div>
-            
+
         </div>
     </div>
 
@@ -229,37 +231,47 @@
         const modal = document.getElementById("modalCarrito");
         var modalFormulario = document.getElementById("modalFormularioPedido");
         menuItems.style.maxHeight = "0px";
-        function menutoggle(){
-            if(menuItems.style.maxHeight == "0px" ){
+        function menutoggle() {
+            if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
-            }else{
+            } else {
                 menuItems.style.maxHeight = "0px";
             }
         }
 
 
         function mostrarCarrito() {
-           
+
             modal.style.display = "block";
         }
         function cerrarCarrito() {
-         
+
             modal.style.display = "none";
         }
-     
 
-        function mostrarForm(element){
+
+
+        function mostrarForm(element) {
+            if (!element) {
+                const button = document.getElementById("botonFormulario");
+                
+                button.onclick = hacerPedidoCarrito;
+
+                modalFormulario.style.display = "block";
+                return;
+            }
+
             const productoId = element.getAttribute("data-id");
             console.log(productoId);
-            
-           
+
+
             const botonEnvio = document.getElementById("botonFormulario");
             botonEnvio.setAttribute("data-id", productoId);
             console.log(botonEnvio);
-            
-            modalFormulario.style.display="block";
+
+            modalFormulario.style.display = "block";
         }
-        function cerrarForm(){
+        function cerrarForm() {
             modalFormulario.style.display = "none";
         }
 

@@ -46,6 +46,7 @@ function mapearCarrito(carro) {
         const tableHead = document.createElement("thead");
 
         tableHead.innerHTML = `
+                    <a id="botonCarrito" type="button" onclick="mostrarForm()" href="#">Hacer pedido</a>
                     <tr>
                         <th>Producto:</th>
                         <th>Cantidad:</th>
@@ -137,25 +138,43 @@ function actualizarContador() {
     contador.textContent = carro.length;
 }
 
-function todosLosProductos(){
+function eliminarProducto(id) {
+    const item = carro.find(i => i.id == id);
+    if (!item) {
+        console.error("El producto no existe");
+    }
+
+    if (item) {
+        carro = carro.filter(c => c.id !== item.id);
+        localStorage.setItem("carro", JSON.stringify(carro));
+        console.log("producto eliminado con exito");
+        mapearCarrito(carro);
+    }
+
+
+
+
+}
+
+function todosLosProductos() {
 
     fetch(`http://localhost:1000/home/productos/recomendados/${id}`, {
         method: "GET",
         headers: {
-            "Content-type":"application/json"
+            "Content-type": "application/json"
         }
-    }).then(response =>{
-        if(!response.ok){
+    }).then(response => {
+        if (!response.ok) {
             throw new Error(`Error inesperado: ${response.status}`);
         }
-        
+
         return response.json();
     }).then(data => {
-        if(data.clase == "error"){
+        if (data.clase == "error") {
             console.error(data.mensaje);
         }
-        
-        
+
+
         productosRecomendados(data);
         mapearCarrito(carro);
 
@@ -184,21 +203,127 @@ function detallesProducto() {
         return response.json();
 
     }).then(data => {
-        
+
         console.log(data.dto);
         produ = data.dto;
-       
+
 
         producto(produ);
-        
-        
-        
-        
+
+
+
+
     }).catch(error => {
         console.log("Error inesperado", error);
     });
 }
 
+function anadirAlCarrito(element, cantidadNueva) {
+    const id = element.getAttribute("data-id");
+    const cantidad = parseInt(cantidadNueva) || 1;
+
+    if (!produ.id === id) {
+        console.error("No existe este producto");
+        return;
+    }
+    const itemExistente = carro.find(item => item.id === id);
+    itemExistente.cantidad = parseInt(itemExistente.cantidad);
+    console.log(id);
+    console.log(cantidad, typeof cantidad);
+    console.log(itemExistente.cantidad, typeof itemExistente.cantidad);
+
+    if (itemExistente) {
+
+        itemExistente.cantidad += cantidad;
+        console.log("Cantidad aumentada");
+
+    } else {
+        carro.push({ ...produ, cantidad: cantidad });
+        console.log("Producto añadido con exito");
+
+    }
+    console.log(carro);
+    localStorage.setItem("carro", JSON.stringify(carro));
+    mapearCarrito(carro);
+    return carro;
+
+}
+async function hacerPedidoCarrito() {
+    const form = document.getElementById('formularioPedidoWhatsApp');
+    
+
+
+    console.log("id", carro[0].id);
+    const formData = new FormData(form);
+
+
+    if (formData.get("autorizacion") === "1") {
+        formData.set("autorizacion", "autorizado");
+
+    }
+    formData.append("productoId", carro[0].id)
+
+    fetch(`http://localhost:1000/home/producto/pedido/form`, {
+        method: "POST",
+        body: formData
+    }).then(response => {
+        if (!response.ok) {
+            console.error(`Error inesperado: ${response.status}`);
+        }
+
+        return response.json();
+    }).then(data => {
+        if (data.clase === "error") {
+            console.error(`Error: ${data.mensaje}`);
+        }
+
+        let mensaje = `¡Hola ${formData.get("nombre")}! 👋
+
+Tu pedido ya está listo para ser empacado 🚚
+
+📋 *DATOS DE ENTREGA:*
+📞 Celular: ${formData.get("contacto")}
+📍 Dirección: ${formData.get("direccion")}
+🏙 Departamento: ${formData.get("depto")}
+🌆 Ciudad: ${formData.get("ciudad")}
+
+🛍 *TUS PRODUCTOS:*`;
+
+        carro.forEach(producto => {
+            mensaje += `
+- ${producto.nombre} (x${producto.cantidad}) - $${(producto.cantidad * producto.precio).toLocaleString()}
+  Talla: ${producto.talla}`;
+        });
+
+        const total = carro.reduce((acc, item) => acc + item.cantidad * item.precio, 0);
+
+        mensaje += `
+
+💰 *TOTAL A PAGAR: $${total.toLocaleString()}*
+
+⚡ *¡CONFIRMA AHORA!* Tu pedido será prioritario en el despacho 🚀
+
+👉 Si todo está correcto, escribe CONFIRMAR 👇
+
+Gracias por confiar en *SNIX.CO* ❤️`;
+
+
+        mensaje = encodeURIComponent(mensaje);
+        
+        const urlWhatsApp = `https://api.whatsapp.com/send/?phone=573127764576&text=${mensaje}`;
+        
+        alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
+        window.open(urlWhatsApp, "_blank");
+        cerrarForm();
+        return;
+
+
+
+
+    }).catch(error => {
+        console.error(`Error: ${error}`);
+    })
+}
 
 
 
@@ -235,15 +360,17 @@ function producto(p) {
                 !important; color: red !important;">
                 ${p.precio - desc}</h4>
                 <h4>${p.precio}</h4>
-                <select name="" id="">
-                    <option></option>
-                    <option></option>
-                    <option></option>
-                    <option></option>
+                <p>Talla<p>
+                <select name="talla" id="tall">
+                    <option>38</option>
+                    <option>39</option>
+                    <option>40</option>
+                    <option>41</option>
+                    <option>42</option>
                 </select>
                 <br>
-                <input type="number" value="1">
-                <a style="cursor:pointer;" id="botonAñadirAlCarrito" data-id="${p.id}" class="btn">Añadir al carrito</a>
+                <input id="cantidad" type="number" name="cantidad" value="1">
+                <a style="cursor:pointer;" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(this, this.previousElementSibling.value)" class="btn">Añadir al carrito</a>
                 <br>
                  <a style="cursor:pointer;"id="botonTituloContraentrega" data-id="${p.id}" onclick="mostrarForm(this)" class="btn">Comprar ya contraentrega</a>
                  <br> 
@@ -259,93 +386,110 @@ function producto(p) {
 
     `;
 
-    
+
     contenedor.appendChild(div);
     contenedor.appendChild(div2);
     return contenedor;
 
 }
 
-function productosRecomendados(rec){
+function productosRecomendados(rec) {
     const contenedor = document.getElementById("rowRecomendados");
-    contenedor.innerHTML="";
-    if(rec.clase == "error"){
-    const div = document.createElement("div");
+    contenedor.innerHTML = "";
+    if (rec.clase == "error") {
+        const div = document.createElement("div");
 
-    div.className="col-4";
+        div.className = "col-4";
 
-    div.innerHTML=`
+        div.innerHTML = `
         
         <h4>${rec.mensaje}</h4>
     `;
-    contenedor.appendChild(div);
-    return contenedor;
+        contenedor.appendChild(div);
+        return contenedor;
     }
     rec.recomendados.forEach(p => {
-    const div = document.createElement("div");
-    div.className="col-4";
-    div.innerHTML=`
+        const div = document.createElement("div");
+        div.className = "col-4";
+        div.innerHTML = `
         <a href="detallesProducto.html?id=${p.id}">
         <img src="${p.imageUrl[0]}"  alt="${p.nombre}">
         </a>
         <h4>${p.nombre}</h4>
     `;
-    contenedor.appendChild(div);
+        contenedor.appendChild(div);
     });
     return contenedor;
-    
+
 }
-async function hacerPedido(element){
+async function hacerPedido(element) {
     const form = document.getElementById('formularioPedidoWhatsApp');
-    
-    
+
+
     const productoId = element.getAttribute("data-id");
+    const talla = document.getElementById("tall").value;
+    const cantidad = document.getElementById("cantidad").value;
     const formData = new FormData(form);
-    
-    
-    for(let [key, value] of formData.entries()){
-        
+
+
+    for (let [key, value] of formData.entries()) {
+
         console.log(key, value);
     }
     formData.append("nombreProducto: ", produ.nombre);
     formData.append("productoId", productoId);
-   
-    if(formData.get("autorizacion") === "1"){
+
+    if (formData.get("autorizacion") === "1") {
         formData.set("autorizacion", "autorizado");
     }
     fetch(`http://localhost:1000/home/producto/pedido/form`, {
         method: "POST",
-        
+
         body: formData
-    
+
     }).then(response => {
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error(`Error inesperado: ${response.status}`);
         }
         return response.json();
     }).then(data => {
-        if(data.clase === "error"){
+        if (data.clase === "error") {
             console.error(data.mensaje);
             return;
-        }   
-        const mensaje = `Hola, quiero hacer un pedido del producto con ID: ${productoId}. Mis datos son:\n
-        Nombre: ${formData.get("nombre")}\n
-        Teléfono: ${formData.get("contacto")}\n
-        Dirección: ${formData.get("direccion")}\n
-        Ciudad: ${formData.get("ciudad")}\n
-        Departamento: ${formData.get("depto")}\n
-        Correo electrónico: ${formData.get("email")}`;
-        const urlWhatsApp = `https://wa.me/573127764576?text=${encodeURIComponent(mensaje)}`;
+        }
+        let mensaje = `*¡Hola ${formData.get("nombre")}* 👋
+
+Tu pedido ya está listo para ser empacado 🚚
+
+📋 *DATOS DE ENTREGA*:
+📞 Celular: ${formData.get("contacto")}
+📍 Dirección: ${formData.get("direccion")}
+🏙 Departamento: ${formData.get("depto")}
+🌆 Ciudad: ${formData.get("ciudad")}
+
+🛍 *TUS PRODUCTOS*:
+- ${produ.nombre} (${cantidad}) - $${produ.precio * cantidad}
+  Talla: ${talla};
+
+💰 TOTAL A PAGAR: $${produ.precio * cantidad}
+
+⚡ ¡CONFIRMA AHORA! Tu pedido será prioritario en el despacho 🚀
+
+👉 Si todo está correcto, escribe CONFIRMAR 👇
+
+Gracias por confiar en SNIX.CO ❤️`;
+
+        mensaje = encodeURIComponent(mensaje);
+        const urlWhatsApp = `https://api.whatsapp.com/send/?phone=573127764576&text=${mensaje}`;
         alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
         window.open(urlWhatsApp, "_blank");
         cerrarForm();
         return;
-           
 
     }).catch(error => {
         console.error("Error inesperado: ", error);
     });
-    
+
 }
 
 detallesProducto();
