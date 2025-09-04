@@ -84,10 +84,10 @@ function mostrarPagina(productos, pagina) {
     });
     paginaActual = pagina;
 }
-function textEmoji(mensaje){
-     const emojiMap = {
+function textEmoji(mensaje) {
+    const emojiMap = {
         '👋': '👋',
-        '🚚': '🚚', 
+        '🚚': '🚚',
         '📋': '📋',
         '📞': '📞',
         '📍': '📍',
@@ -101,7 +101,7 @@ function textEmoji(mensaje){
         '👇': '👇',
         '❤️': '❤️'
     };
-    
+
     return mensaje;
 }
 async function hacerPedidoCarrito(carrito) {
@@ -165,9 +165,9 @@ Gracias por confiar en *SNIX.CO* ❤️`;
 
 
         mensaje = encodeURIComponent(mensaje);
-        
+
         const urlWhatsApp = `https://api.whatsapp.com/send/?phone=573127764576&text=${mensaje}`;
-        
+
         alert("¡Pedido realizado exitosamente! Te estamos redirigiendo a WhatsApp.");
         window.open(urlWhatsApp, "_blank");
         cerrarForm();
@@ -256,9 +256,9 @@ function listarProductos() {
             }
 
             obtenerCarrito();
-
-            mostrarPagina(productos, 1);
             sliderProductos();
+            mostrarPagina(productos, 1);
+
             crearPaginacion();
 
 
@@ -506,9 +506,10 @@ function filtrarPorCategoria() {
     mostrarPagina(productosFiltrados, 1);
     crearPaginacion();
 }
-function sliderProductos() {
+async function sliderProductos() {
 
-    const sliderTracker = document.getElementById("sliderProductos");
+    const sliderTracker = document.getElementById("sliderProductoss");
+    console.log(sliderTracker);
     sliderTracker.className = "slider-track";
     sliderTracker.innerHTML = "";
     const div = document.createElement("div");
@@ -649,4 +650,5 @@ Gracias por confiar en SNIX.CO ❤️`;
 
 //getCsrfToken();
 listarProductos();
+
 

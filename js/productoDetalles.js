@@ -252,7 +252,7 @@ async function hacerPedidoCarrito() {
     const form = document.getElementById('formularioPedidoWhatsApp');
     
 
-
+    const color = document.getElementById("color");
     console.log("id", carro[0].id);
     const formData = new FormData(form);
 
@@ -261,6 +261,7 @@ async function hacerPedidoCarrito() {
         formData.set("autorizacion", "autorizado");
 
     }
+    producto.color=color;
     formData.append("productoId", carro[0].id)
 
     fetch(`http://localhost:1000/home/producto/pedido/form`, {
@@ -292,7 +293,8 @@ Tu pedido ya está listo para ser empacado 🚚
         carro.forEach(producto => {
             mensaje += `
 - ${producto.nombre} (x${producto.cantidad}) - $${(producto.cantidad * producto.precio).toLocaleString()}
-  Talla: ${producto.talla}`;
+  Talla: ${producto.talla}
+  Color: ${producto.color}`;
         });
 
         const total = carro.reduce((acc, item) => acc + item.cantidad * item.precio, 0);
@@ -367,6 +369,13 @@ function producto(p) {
                     <option>40</option>
                     <option>41</option>
                     <option>42</option>
+                    <option>43</option>
+                </select>
+                <select name="color" id="color">
+                    <option>Rojo</option>
+                    <option>Verde</option>
+                    <option>Azul</option>
+                    <option>Negro</option>
                 </select>
                 <br>
                 <input id="cantidad" type="number" name="cantidad" value="1">
@@ -379,10 +388,7 @@ function producto(p) {
                 <br>
                 <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
                 <br>
-                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
-                    Deleniti assumenda id perferendis libero, consectetur nihil 
-                    quasi magnam cum soluta recusandae earum necessitatibus quam 
-                    quod facilis nemo odit excepturi. Maxime, nihil?</p>
+                <p>${p.detalles}</p>
 
     `;
 
@@ -429,6 +435,7 @@ async function hacerPedido(element) {
     const productoId = element.getAttribute("data-id");
     const talla = document.getElementById("tall").value;
     const cantidad = document.getElementById("cantidad").value;
+    const color = document.getElementById("color").value;
     const formData = new FormData(form);
 
 
@@ -470,6 +477,7 @@ Tu pedido ya está listo para ser empacado 🚚
 🛍 *TUS PRODUCTOS*:
 - ${produ.nombre} (${cantidad}) - $${produ.precio * cantidad}
   Talla: ${talla};
+  Color: ${color};
 
 💰 TOTAL A PAGAR: $${produ.precio * cantidad}
 
