@@ -95,12 +95,7 @@ a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img) {
     min-width: 300px;
 }
 
-.col-2 img {
-    max-width: 150%;
-    padding: 50px 0;
-    padding-right: 100px;
-    padding-left: 100px;
-}
+
 
 .col-2 h1 {
     font-size: 50px;
@@ -615,10 +610,7 @@ select:focus {
 
 }
 
-.producto-individual .col-2 img {
-    padding: 0;
 
-}
 
 .producto-individual .col-2 {
     padding: 20px;
@@ -685,23 +677,86 @@ input[type="email"]:hover {
     color: #dbff47;
     margin-left: 10px;
 }
+
+
+.imagen-principal {
+    width: 100%;
+    height: 40rem;
+    position: relative;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: white;
+}
+.imagen-principal img{
+    width: 55rem;
+    height: 37rem;
+    object-fit: contain;
+    position: absolute;
+    border-radius: 0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+@media(max-width:630px){
+    .imagen-principal{
+        height: 30rem;
+
+    }
+    .imagen-principal img{
+        width: 90%;
+        height: 100%;
+        padding: 1rem;
+    }
+}
+@media(max-width:375px){
+    .imagen-principal{
+        height: 25rem;
+    }
+}
+
+
+
+.small-image-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    gap: 0.7rem;
+}
+
+
+
+.small-img-col {
+    background: white;
+    border: 0.3rem solid white;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+}
+
+.small-img-col.active{
+    border: 0.3rem solid #dbff47;
+}
+
 .small-img-col img {
     width: 100%;
-    height: 150px;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     border-radius: 6px;
 
 }
 
+.product-down-animation{
+    animation: down 0.5s ease;
 
-.small-image-row {
-    display: flex;
-    justify-content: space-between;
 }
 
-.small-image-col {
-    flex-basis: 24%;
-    cursor: pointer;
+@keyframes down {
+    0%{
+        top: -100%;
+    }100%{
+        top: 0%;
+    }
 }
 
 #botonTituloContraentrega {

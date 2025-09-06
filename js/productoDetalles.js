@@ -3,7 +3,7 @@ const params = new URLSearchParams(window.location.search);
 
 const id = params.get("id");
 let recomendados = [];
-const desc = 50000.00;
+const desc = 2;
 let produ;
 let carro = JSON.parse(localStorage.getItem("carro")) || [];
 
@@ -339,29 +339,31 @@ function producto(p) {
     div.className = "col-2";
     div2.className = "col-2";
     div.innerHTML = `
-        
-                <img id="imagenProducto" src="${p.imageUrl[0]}" alt="" width="100%">
+                <div class="imagen-principal">
+                <img class="main-image" id="imagenProducto" src="${p.imageUrl[0]}" data-index="1" alt="">
+                </div>
                 <div class="small-image-row">
-                    <div class="small-img-col">
-                        <img src="${p.imageUrl[1]}" alt="">
+                    <div class="small-img-col active">
+                        <img src="${p.imageUrl[0]}" data-index="1" alt="">
                     </div>
                     <div class="small-img-col">
-                        <img src="${p.imageUrl[2]}" alt="">
+                        <img src="${p.imageUrl[1]}" data-index="2" alt="">
                     </div>
                     <div class="small-img-col">
-                        <img src="${p.imageUrl[3]}" alt="">
+                        <img src="${p.imageUrl[2]}" data-index="3" alt="">
                     </div>
                     <div class="small-img-col">
-                        <img src="${p.imageUrl[4]}" alt="">
+                        <img src="${p.imageUrl[3]}" data-index="4" alt="">
                     </div>
+                    
                 </div>`;
     div2.innerHTML = `
                 <p>${p.categoria} - ${p.marca}</p>
                 <h1>${p.nombre}</h1>
                 <h4 style="text-decoration: line-through 
                 !important; color: red !important;">
-                ${p.precio - desc}</h4>
-                <h4>${p.precio}</h4>
+                $${p.precio * desc} Antes</h4>
+                <h4>$${p.precio} Ahora</h4>
                 <p>Talla<p>
                 <select name="talla" id="tall">
                     <option>38</option>

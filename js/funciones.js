@@ -5,7 +5,7 @@ let id = params.get("id");
 const productosPorPagina = 12;
 let productos = [];
 let paginaActual = 1;
-const descuento = 50000;
+const descuento = 2;
 let producto;
 let carro = [];
 
@@ -66,8 +66,8 @@ function mostrarPagina(productos, pagina) {
         <div class="rating">
         ${generarEstrellas(p.rating)}
         </div>
-        <p style="text-decoration: line-through !important; color: red !important;">$${p.precio + descuento}<p>
-        <p>$${p.precio}</p>
+        <p style="text-decoration: line-through !important; color: red !important;">$${p.precio * descuento} Antes</p>
+        <p>$${p.precio} Ahora</p>
         
         <a style="display: block;     
     margin-bottom: 3px;

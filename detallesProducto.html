@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nuestros productos - SnixCo</title>
+        <link rel="icon" href="images/Snik-logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://kit.fontawesome.com/92c15939e4.js" crossorigin="anonymous"></script>
@@ -13,6 +14,7 @@
     <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css">
     <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/productoDetalles.js"></script>
 </head>
 
@@ -120,21 +122,23 @@
     <div id="detalleProducto" class="container">
         <div class="small-container producto-individual">
             <div id="rowProducto" class="row">
-                <div class="col-2">
+                <div id="detallesProductosImagenes" class="col-2">
+                    <div class="imagen-principal">
                     <img id="imagenProducto" src="images/nige2-removebg-preview-removebg-preview (1).png" alt=""
-                        width="100%">
+                     class="main-image" data-index="1">
+                    </div>    
                     <div class="small-image-row">
-                        <div class="small-img-col">
-                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                        <div class="small-img-col active">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" data-index="1" alt="">
                         </div>
                         <div class="small-img-col">
-                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" data-index="2" alt="">
                         </div>
                         <div class="small-img-col">
-                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" data-index="3" alt="">
                         </div>
                         <div class="small-img-col">
-                            <img src="images/nige2-removebg-preview-removebg-preview (1).png" alt="">
+                            <img src="images/nige2-removebg-preview-removebg-preview (1).png"  data-index="4" alt="">
                         </div>
                     </div>
 
@@ -232,6 +236,38 @@
         const modal = document.getElementById("modalCarrito");
         var modalFormulario = document.getElementById("modalFormularioPedido");
         menuItems.style.maxHeight = "0px";
+        let producto_img = document.querySelector('.imagen-principal img');
+        let producto_imgSmall = document.querySelectorAll('.small-img-col');
+
+       document.addEventListener('click', function(e) {
+    // Verifica si el click fue en un elemento .small-img-col
+    if (e.target.closest('.small-img-col')) {
+        const clickedElement = e.target.closest('.small-img-col');
+        
+        // Remueve active de todos
+        document.querySelectorAll('.small-img-col').forEach(producto => {
+            producto.classList.remove('active');
+        });
+        
+        // Agrega active al clickeado
+        clickedElement.classList.add('active');
+        
+        let img = clickedElement.querySelector('img').getAttribute('src');
+        let index = clickedElement.querySelector('img').getAttribute('data-index');
+        let producto_img = document.querySelector('.imagen-principal img');
+
+        producto_img.setAttribute('src', img);
+        producto_img.setAttribute('data-index', index);
+        producto_img.classList.add("product-down-animation");
+
+        setTimeout(() => {
+           producto_img.classList.remove("product-down-animation"); 
+        }, 500);
+    }
+});
+
+
+
         function menutoggle() {
             if (menuItems.style.maxHeight == "0px") {
                 menuItems.style.maxHeight = "200px";
