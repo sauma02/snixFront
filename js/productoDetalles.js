@@ -355,6 +355,8 @@ function producto(p) {
                     <div class="small-img-col">
                         <img src="${p.imageUrl[3]}" data-index="4" alt="">
                     </div>
+                  
+                    
                     
                 </div>`;
     div2.innerHTML = `
