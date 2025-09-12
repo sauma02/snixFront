@@ -467,7 +467,8 @@ function filtrarProductos() {
         case "converse":
         case "caterpillar":
         case "adidas":
-            productosFiltrados = productosFiltrados.filter(p => p.marca.toLowerCase() === orden.toLowerCase());
+        case "oncloud":   
+            productosFiltrados = productosFiltrados.filter(p => p.marca.toLowerCase() === value.toLowerCase());
             break;
         case "todasLasMarcas":
             productosFiltrados;

@@ -55,7 +55,7 @@ a img {
     transition: width 0.5s;
 }
 
-a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img) {
+a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img, #rowRecomendados a img) {
     width: 150px;
 }
 
@@ -178,6 +178,7 @@ a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img) {
 
 .col-4 img {
     width: 100%;
+    height: 100%;
 }
 
 .title {
@@ -1184,6 +1185,12 @@ input:valid {
     }
 }
 
+#guiaTallas{
+    width: 500px;
+}
+
+
+
 
 
 
@@ -1222,6 +1229,10 @@ input:valid {
 
     }
 
+    #guiaTallas{
+        width: 350px;
+    }
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -1235,7 +1246,10 @@ input:valid {
     .col-5 {
         flex-basis: 100%;
     }
-
+    
+    #guiaTallas{
+        width: 250px;
+    }
 }
 
 
@@ -1271,6 +1285,9 @@ input:valid {
 
     .slider-track {
         animation-duration: 15s;
+    }
+    #guiaTallas{
+        width: 300px;
     }
 }
 

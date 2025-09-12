@@ -392,7 +392,13 @@ function producto(p) {
                 <br>
                 <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
                 <br>
-                <p>${p.detalles}</p>
+                <p>${p.detalles}
+                <div class="small-image-row"
+                <div class="small-image-col">
+                    <img id="guiaTallas" src="images/guiaTallas.png">
+                </div>
+                </div>
+                </p>
 
     `;
 
