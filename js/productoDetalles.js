@@ -336,37 +336,42 @@ function producto(p) {
 
     const div = document.createElement("div");
     const div2 = document.createElement("div");
+    
+    // Use your existing col-2 class which works with the new CSS
     div.className = "col-2";
     div2.className = "col-2";
+    
     div.innerHTML = `
-                <div class="imagen-principal">
-                <img class="main-image" id="imagenProducto" src="${p.imageUrl[0]}" data-index="1" alt="">
-                </div>
-                <div class="small-image-row">
-                    <div class="small-img-col active">
-                        <img src="${p.imageUrl[0]}" data-index="1" alt="">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="${p.imageUrl[1]}" data-index="2" alt="">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="${p.imageUrl[2]}" data-index="3" alt="">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="${p.imageUrl[3]}" data-index="4" alt="">
-                    </div>
-                  
-                    
-                    
-                </div>`;
+        <div class="imagen-principal">
+            <img class="main-image" id="imagenProducto" src="${p.imageUrl[0]}" data-index="1" alt="">
+        </div>
+        <div class="small-image-row">
+            <div class="small-img-col active">
+                <img src="${p.imageUrl[0]}" data-index="1" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="${p.imageUrl[1]}" data-index="2" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="${p.imageUrl[2]}" data-index="3" alt="">
+            </div>
+            <div class="small-img-col">
+                <img src="${p.imageUrl[3]}" data-index="4" alt="">
+            </div>
+        </div>
+    `;
+    
     div2.innerHTML = `
-                <p>${p.categoria} - ${p.marca}</p>
-                <h1>${p.nombre}</h1>
-                <h4 style="text-decoration: line-through 
-                !important; color: red !important;">
-                $${p.precio * desc} Antes</h4>
-                <h4>$${p.precio} Ahora</h4>
-                <p>Talla<p>
+        <div class="product-details">
+            <p>${p.categoria} - ${p.marca}</p>
+            <h1>${p.nombre}</h1>
+            <h4 style="text-decoration: line-through !important; color: red !important;">
+                ${p.precio * desc} Antes
+            </h4>
+            <h4>${p.precio} Ahora</h4>
+            
+            <div class="product-options">
+                <p>Talla</p>
                 <select name="talla" id="tall">
                     <option>38</option>
                     <option>39</option>
@@ -375,38 +380,56 @@ function producto(p) {
                     <option>42</option>
                     <option>43</option>
                 </select>
+                
+                <p>Color</p>
                 <select name="color" id="color">
                     <option>Rojo</option>
                     <option>Verde</option>
                     <option>Azul</option>
                     <option>Negro</option>
                 </select>
-                <br>
-                <input id="cantidad" type="number" name="cantidad" value="1">
-                <a style="cursor:pointer;" id="botonAñadirAlCarrito" data-id="${p.id}" onclick="anadirAlCarrito(this, this.previousElementSibling.value)" class="btn">Añadir al carrito</a>
-                <br>
-                 <a style="cursor:pointer;"id="botonTituloContraentrega" data-id="${p.id}" onclick="mostrarForm(this)" class="btn">Comprar ya contraentrega</a>
-                 <br> 
-                 
-                <br>
-                <br>
-                <h3>Detalles del producto<i class="fa fa-indent"></i></h3>
-                <br>
-                <p>${p.detalles}
-                <div class="small-image-row"
-                <div class="small-image-col">
-                    <img id="guiaTallas" src="images/guiaTallas.png">
+                
+                <div class="quantity-section">
+                    <label for="cantidad">Cantidad:</label>
+                    <input id="cantidad" type="number" name="cantidad" value="1" min="1">
                 </div>
+            </div>
+            
+            <div class="action-buttons">
+                <a style="cursor:pointer;" 
+                   id="botonAñadirAlCarrito" 
+                   data-id="${p.id}" 
+                   onclick="anadirAlCarrito(this, document.getElementById('cantidad').value)" 
+                   class="btn">
+                   Añadir al carrito
+                </a>
+                <a style="cursor:pointer;" 
+                   id="botonTituloContraentrega" 
+                   data-id="${p.id}" 
+                   onclick="mostrarForm(this)" 
+                   class="btn">
+                   Comprar ya contraentrega
+                </a>
+            </div>
+            
+            <div class="product-details-section">
+                <h3>Detalles del producto <i class="fa fa-indent"></i></h3>
+                <p>${p.detalles}</p>
+                
+                <div class="size-guide">
+                    <div class="small-image-row">
+                        <div class="small-image-col">
+                            <img id="guiaTallas" src="images/guiaTallas.png" alt="Guía de tallas">
+                        </div>
+                    </div>
                 </div>
-                </p>
-
+            </div>
+        </div>
     `;
-
 
     contenedor.appendChild(div);
     contenedor.appendChild(div2);
     return contenedor;
-
 }
 
 function productosRecomendados(rec) {
