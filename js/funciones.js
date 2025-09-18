@@ -256,7 +256,7 @@ function listarProductos() {
             }
 
             obtenerCarrito();
-            sliderProductos();
+            
             mostrarPagina(productos, 1);
 
             crearPaginacion();
@@ -467,7 +467,7 @@ function filtrarProductos() {
         case "converse":
         case "caterpillar":
         case "adidas":
-        case "oncloud":   
+        case "oncloud":
             productosFiltrados = productosFiltrados.filter(p => p.marca.toLowerCase() === value.toLowerCase());
             break;
         case "todasLasMarcas":
@@ -491,13 +491,18 @@ function filtrarPorCategoria() {
     }
 
     switch (id.toLowerCase()) {
-        case "damas":
-            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
-            break;
-        case "caballeros":
-            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
         case "unisex":
             productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+            break;
+        case "tennis":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+            break;
+        case "streetwear":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+            break;
+        case "running":
+            productosFiltrados.filter(p => p.categoria.toLowerCase() === id.toLowerCase());
+            break;
         default:
             console.error("Error, categroia inexistente");
             break;
@@ -509,7 +514,7 @@ function filtrarPorCategoria() {
 }
 async function sliderProductos() {
 
-    const sliderTracker = document.getElementById("sliderProductoss");
+    const sliderTracker = document.getElementById("sliderProductos");
     console.log(sliderTracker);
     sliderTracker.className = "slider-track";
     sliderTracker.innerHTML = "";
@@ -517,6 +522,7 @@ async function sliderProductos() {
     div.className = "slide";
 
     let productosFiltrados = productos.sort((a, b) => b.rating - a.rating);
+    console.log(productosFiltrados);
     productosFiltrados = productosFiltrados.slice(0, 8);
 
     productosFiltrados.forEach(p => {
@@ -528,7 +534,7 @@ async function sliderProductos() {
                                 <div class="rating">
                                     ${generarEstrellas(p.rating)}
                                 </div>
-                                <p style="text-decoration: line-through !important; color: red !important;>${p.precio - 50000}</p>
+                                <p style="text-decoration: line-through !important; color: red !important;">${p.precio - descuento * p.precio}</p>
                                 <p>${p.precio}</p>
         `;
         div.appendChild(div2);
@@ -650,6 +656,11 @@ Gracias por confiar en SNIX.CO ❤️`;
 }
 
 //getCsrfToken();
-listarProductos();
+
+window.addEventListener("DOMContentLoaded", () =>{
+    listarProductos();
+sliderProductos();
+});
+
 
 
