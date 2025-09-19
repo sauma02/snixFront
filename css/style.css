@@ -55,7 +55,7 @@ a img {
     transition: width 0.5s;
 }
 
-a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img, #rowRecomendados a img) {
+a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img, #rowRecomendados a img, #productosDestacados a img) {
     width: 150px;
 }
 
@@ -238,6 +238,14 @@ a img:hover:not(#categoriasDestacadas a img, #contenedorProductos a img, #rowRec
 
 #categoriasDestacadas .title::after {
     background: #dbff47;
+}
+
+#servicios .title::after{
+    background: #dbff47;
+}
+
+#servicios img{
+    border-radius: 30px;
 }
 
 #navBarContainer .row {
@@ -834,7 +842,7 @@ input[type="email"]:hover {
     margin: 0 auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    height: 400px;
+    height: 100%;
 }
 
 input[type="radio"] {

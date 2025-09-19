@@ -233,7 +233,7 @@ function eliminarProducto(id) {
 }
 
 
-function listarProductos() {
+async function listarProductos() {
     fetch("http://localhost:1000/home/productos", {
         method: "GET",
         headers: {
@@ -242,7 +242,7 @@ function listarProductos() {
     })
         .then(response => {
             if (!response.ok) {
-                console.error("Error al obetener productos");
+                console.error("Error al obtener productos");
             }
 
             return response.json();
@@ -256,7 +256,8 @@ function listarProductos() {
             }
 
             obtenerCarrito();
-            
+            sliderProductos(productos);
+
             mostrarPagina(productos, 1);
 
             crearPaginacion();
@@ -512,36 +513,40 @@ function filtrarPorCategoria() {
     mostrarPagina(productosFiltrados, 1);
     crearPaginacion();
 }
-async function sliderProductos() {
-
+async function sliderProductos(productos) {
+    let productosFiltrados = [...productos];
+    console.log(productosFiltrados)
     const sliderTracker = document.getElementById("sliderProductos");
     console.log(sliderTracker);
     sliderTracker.className = "slider-track";
     sliderTracker.innerHTML = "";
-    const div = document.createElement("div");
-    div.className = "slide";
 
-    let productosFiltrados = productos.sort((a, b) => b.rating - a.rating);
+    productosFiltrados = productosFiltrados.sort((a, b) => b.rating - a.rating);
     console.log(productosFiltrados);
     productosFiltrados = productosFiltrados.slice(0, 8);
 
     productosFiltrados.forEach(p => {
-        const div2 = document.createElement("div");
-        div2.className = "col-4";
-        div2.innerHTML = `
-                    <img src="${p.imageUrl}" alt="">
-                                <h4>Zapatilla deportiva</h4>
-                                <div class="rating">
-                                    ${generarEstrellas(p.rating)}
-                                </div>
-                                <p style="text-decoration: line-through !important; color: red !important;">${p.precio - descuento * p.precio}</p>
-                                <p>${p.precio}</p>
-        `;
-        div.appendChild(div2);
-        sliderTracker.appendChild(div);
-    });
-    return sliderTracker;
+        // Create a new slide div for each product
+        const slide = document.createElement("div");
+        slide.className = "slide";
 
+        const col4 = document.createElement("div");
+        col4.className = "col-4";
+        col4.innerHTML = `
+            <a href="detallesProducto.html?id=${p.id}"><img src="${p.imageUrl[0]}" alt="${p.nombre}"></a>
+            <h4>${p.nombre}</h4>
+            <div class="rating">   
+                ${generarEstrellas(p.rating)}
+            </div>
+            <p style="text-decoration: line-through !important; color: red !important;">$${p.precio * descuento} Antes</p>
+            <p>$${p.precio} Ahora</p>
+        `;
+
+        slide.appendChild(col4);
+        sliderTracker.appendChild(slide);
+    });
+
+    return sliderTracker;
 }
 /*async function getCsrfToken(){
 
@@ -657,10 +662,11 @@ Gracias por confiar en SNIX.CO ❤️`;
 
 //getCsrfToken();
 
-window.addEventListener("DOMContentLoaded", () =>{
-    listarProductos();
-sliderProductos();
-});
+
+
+listarProductos();
+
+
 
 
 

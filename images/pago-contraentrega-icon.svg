@@ -1,0 +1,62 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo verde lima -->
+  <rect width="300" height="300" fill="#dbff47"/>
+  
+  <!-- Estrellas decorativas en las esquinas -->
+  <g fill="#000000">
+    <!-- Estrella superior izquierda -->
+    <polygon points="20,30 25,20 30,30 40,25 30,35 25,45 20,35 10,25" transform="rotate(-15 25 30)"/>
+    <!-- Estrella superior derecha -->
+    <polygon points="270,30 275,20 280,30 290,25 280,35 275,45 270,35 260,25" transform="rotate(15 275 30)"/>
+    <!-- Estrella inferior izquierda -->
+    <polygon points="20,270 25,260 30,270 40,265 30,275 25,285 20,275 10,265" transform="rotate(15 25 270)"/>
+    <!-- Estrella inferior derecha -->
+    <polygon points="270,270 275,260 280,270 290,265 280,275 275,285 270,275 260,265" transform="rotate(-15 275 270)"/>
+    <!-- Estrella superior centro -->
+    <polygon points="150,20 155,10 160,20 170,15 160,25 155,35 150,25 140,15" transform="rotate(0 155 20)"/>
+  </g>
+  
+  <!-- Marco rectangular -->
+  <rect x="40" y="50" width="220" height="200" fill="none" stroke="#000000" stroke-width="3" rx="10"/>
+  
+  <!-- Mano con billetes -->
+  <g transform="translate(120, 80)">
+    <!-- Mano -->
+    <g fill="none" stroke="#000000" stroke-width="2.5">
+      <!-- Palm -->
+      <path d="M 15 60 Q 10 50 15 40 Q 20 30 30 35 Q 40 40 45 50 Q 50 60 45 70 Q 40 80 30 75 Q 20 70 15 60"/>
+      <!-- Thumb -->
+      <path d="M 20 45 Q 15 40 20 35 Q 25 30 30 35"/>
+      <!-- Index finger -->
+      <path d="M 30 30 Q 28 25 30 20 Q 32 15 35 20"/>
+      <!-- Middle finger -->
+      <path d="M 35 28 Q 33 23 35 18 Q 37 13 40 18"/>
+      <!-- Ring finger -->
+      <path d="M 40 30 Q 38 25 40 20 Q 42 15 45 20"/>
+      <!-- Pinky -->
+      <path d="M 45 35 Q 43 30 45 25 Q 47 20 50 25"/>
+    </g>
+    
+    <!-- Billetes -->
+    <g fill="#90EE90" stroke="#000000" stroke-width="1.5">
+      <!-- Billete 1 -->
+      <rect x="25" y="10" width="25" height="15" rx="2"/>
+      <circle cx="30" cy="17.5" r="3" fill="none"/>
+      <text x="37.5" y="19" font-family="Arial" font-size="6" text-anchor="middle" fill="#000">$</text>
+      
+      <!-- Billete 2 -->
+      <rect x="28" y="5" width="25" height="15" rx="2"/>
+      <circle cx="33" cy="12.5" r="3" fill="none"/>
+      <text x="40.5" y="14" font-family="Arial" font-size="6" text-anchor="middle" fill="#000">$</text>
+      
+      <!-- Billete 3 -->
+      <rect x="31" y="0" width="25" height="15" rx="2"/>
+      <circle cx="36" cy="7.5" r="3" fill="none"/>
+      <text x="43.5" y="9" font-family="Arial" font-size="6" text-anchor="middle" fill="#000">$</text>
+    </g>
+  </g>
+  
+  <!-- Texto -->
+  <text x="150" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000">Paga contra</text>
+  <text x="150" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000">entrega</text>
+</svg>

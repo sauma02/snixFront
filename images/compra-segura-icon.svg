@@ -1,0 +1,58 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo verde lima -->
+  <rect width="300" height="300" fill="#dbff47"/>
+  
+  <!-- Estrellas decorativas en las esquinas -->
+  <g fill="#000000">
+    <!-- Estrella superior izquierda -->
+    <polygon points="20,30 25,20 30,30 40,25 30,35 25,45 20,35 10,25" transform="rotate(-15 25 30)"/>
+    <!-- Estrella superior derecha -->
+    <polygon points="270,30 275,20 280,30 290,25 280,35 275,45 270,35 260,25" transform="rotate(15 275 30)"/>
+    <!-- Estrella inferior izquierda -->
+    <polygon points="20,270 25,260 30,270 40,265 30,275 25,285 20,275 10,265" transform="rotate(15 25 270)"/>
+    <!-- Estrella inferior derecha -->
+    <polygon points="270,270 275,260 280,270 290,265 280,275 275,285 270,275 260,265" transform="rotate(-15 275 270)"/>
+    <!-- Estrella superior centro -->
+    <polygon points="150,20 155,10 160,20 170,15 160,25 155,35 150,25 140,15" transform="rotate(0 155 20)"/>
+  </g>
+  
+  <!-- Marco rectangular -->
+  <rect x="40" y="50" width="220" height="200" fill="none" stroke="#000000" stroke-width="3" rx="10"/>
+  
+  <!-- Reloj 24 horas -->
+  <g transform="translate(150, 110)">
+    <!-- Círculo del reloj -->
+    <circle cx="0" cy="0" r="35" fill="none" stroke="#000000" stroke-width="3"/>
+    
+    <!-- Números del reloj -->
+    <text x="0" y="-22" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">12</text>
+    <text x="22" y="5" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">3</text>
+    <text x="0" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">6</text>
+    <text x="-22" y="5" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#000000">9</text>
+    
+    <!-- Manecillas del reloj -->
+    <line x1="0" y1="0" x2="0" y2="-18" stroke="#000000" stroke-width="3" stroke-linecap="round"/> <!-- Minutero -->
+    <line x1="0" y1="0" x2="12" y2="-8" stroke="#000000" stroke-width="2.5" stroke-linecap="round"/> <!-- Horario -->
+    
+    <!-- Centro del reloj -->
+    <circle cx="0" cy="0" r="3" fill="#000000"/>
+    
+    <!-- Número 24 en el centro -->
+    <text x="0" y="-45" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#000000">24</text>
+  </g>
+  
+  <!-- Candado de seguridad -->
+  <g transform="translate(190, 85)">
+    <!-- Arco del candado -->
+    <path d="M 10 0 Q 10 -8 18 -8 Q 26 -8 26 0" fill="none" stroke="#000000" stroke-width="2.5"/>
+    <!-- Cuerpo del candado -->
+    <rect x="8" y="0" width="20" height="15" rx="2" fill="none" stroke="#000000" stroke-width="2.5"/>
+    <!-- Ojo de cerradura -->
+    <circle cx="18" cy="7.5" r="2" fill="none" stroke="#000000" stroke-width="1.5"/>
+    <line x1="18" y1="9.5" x2="18" y2="12" stroke="#000000" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Texto -->
+  <text x="150" y="190" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000">Compra 100%</text>
+  <text x="150" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#000000">segura</text>
+</svg>
